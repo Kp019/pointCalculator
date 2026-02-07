@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Player, Round, GameConfig } from "../App";
+import type { Player, Round, GameConfig } from "../types/game";
 
 interface LeaderboardProps {
   players: Player[];
@@ -32,9 +32,6 @@ const Leaderboard = ({
   } | null>(null);
   const [newScoreValue, setNewScoreValue] = useState<string>("");
 
-  // 'players' prop is already sorted by useGameLogic in App.tsx
-  // It handles elimination sorting (active first) and score sorting.
-
   const winner = isGameOver && players.length > 0 ? players[0] : null;
 
   const getRankColor = (
@@ -46,11 +43,11 @@ const Leaderboard = ({
     if (isPlayerWinner) return "from-yellow-400 to-orange-500 animate-pulse";
     switch (rank) {
       case 0:
-        return "from-yellow-400 to-yellow-600"; // Gold
+        return "from-yellow-400 to-yellow-600";
       case 1:
-        return "from-slate-300 to-slate-500"; // Silver
+        return "from-slate-300 to-slate-500";
       case 2:
-        return "from-amber-600 to-amber-800"; // Bronze
+        return "from-amber-600 to-amber-800";
       default:
         return "from-slate-600 to-slate-700";
     }
@@ -241,7 +238,7 @@ const Leaderboard = ({
 
       {/* Game Stats */}
       {rounds.length > 0 && (
-        <div className="mt-6 p-5 bg-gradient-to-br from-primary-50 via-accent-50 to-primary-50 border border-primary-100 rounded-2xl shadow-sm">
+        <div className="mt-6 p-5 bg-linear-to-br from-primary-50 via-accent-50 to-primary-50 border border-primary-100 rounded-2xl shadow-sm">
           <div className="flex items-center gap-2 mb-4">
             <svg
               className="w-5 h-5 text-primary-500"

@@ -31,9 +31,14 @@
   --animate-slide-up: slideUp 0.5s ease-out;
   --animate-slide-down: slideDown 0.5s ease-out;
   --animate-scale-in: scaleIn 0.3s ease-out;
+  --animate-slide-in: slideIn 0.3s ease-out;
   --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-gradient-x: gradient-x 3s ease infinite;
 
+  @keyframes slideIn {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
   @keyframes gradient-x {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -72,7 +77,7 @@
 @layer components {
   /* Card Component */
   .card {
-    @apply relative bg-white rounded-2xl p-8 
+    @apply relative bg-white rounded-2xl md:p-8 p-4
            border border-slate-200 shadow-xl shadow-slate-200/50 transition-all duration-300;
   }
   

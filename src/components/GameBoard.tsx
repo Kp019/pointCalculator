@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Player } from "../App";
+import type { Player } from "../types/game";
 
 interface GameBoardProps {
   players: Player[];
@@ -45,14 +45,13 @@ const GameBoard = ({
       <h2 className="text-2xl font-bold mb-6">
         Enter Scores for Round {currentRound}
       </h2>
-
-      <div className="space-y-4 mb-6">
+      <div className="space-y-4 mb-6 md:h-[40vh] md:overflow-auto">
         {players.map((player, index) => {
           const isEliminated = eliminatedPlayerIds.has(player.id);
           return (
             <div
               key={player.id}
-              className={`group flex items-center gap-4 p-5 rounded-2xl border transition-all duration-300 animate-slide-up shadow-sm ${
+              className={`group flex sm:flex-row flex-col sm:items-center items-start gap-4 p-5 rounded-2xl border transition-all duration-300 animate-slide-up shadow-sm ${
                 isEliminated
                   ? "bg-slate-50 border-slate-200 opacity-60 grayscale-[0.8]"
                   : "bg-white border-slate-200 hover:border-primary-300 hover:shadow-xl hover:shadow-primary-500/5"
@@ -102,7 +101,7 @@ const GameBoard = ({
                   </div>
                 </div>
               </div>
-              <div className="w-32">
+              <div className="sm:w-32 w-full">
                 <input
                   type="text"
                   inputMode="numeric"
@@ -121,7 +120,7 @@ const GameBoard = ({
       <button
         onClick={handleSubmit}
         disabled={isGameOver}
-        className={`btn-primary w-full text-lg py-5 font-bold group ${isGameOver ? "opacity-50 cursor-not-allowed" : ""}`}
+        className={`btn-primary w-full sm:text-center text-left text-lg py-5 font-bold group ${isGameOver ? "opacity-50 cursor-not-allowed" : ""}`}
       >
         <span className="flex items-center justify-center gap-3 text-white">
           <svg
@@ -155,7 +154,7 @@ const GameBoard = ({
       </button>
 
       <div className="mt-6 p-4 bg-primary-50 border border-primary-100 rounded-xl">
-        <p className="text-sm text-primary-700 text-center flex items-center justify-center gap-2 font-medium">
+        <p className="text-sm text-primary-700 sm:text-center text-left text-center flex items-center justify-center gap-2 font-medium">
           <svg
             className="w-5 h-5 flex-shrink-0 text-primary-500"
             fill="currentColor"
