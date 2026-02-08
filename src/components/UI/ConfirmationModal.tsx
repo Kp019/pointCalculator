@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "./Modal";
 import { useAppSelector, useAppDispatch } from "../../store";
 import { hideModal } from "../../store/slices/uiSlice";
+import { logoutUser } from "../../store/slices/authSlice";
 
 const ConfirmationModal: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -20,10 +21,19 @@ const ConfirmationModal: React.FC = () => {
 
   const handleConfirm = () => {
     if (onConfirm) {
-      const actions = onConfirm.split(",");
-      actions.forEach((action) => {
-        dispatch({ type: action.trim(), payload: payload });
-      });
+      if (typeof onConfirm === "function") {
+        onConfirm();
+      } else {
+        const actions = onConfirm.split(",");
+        actions.forEach((action) => {
+          const actionType = action.trim();
+          if (actionType === "auth/logout") {
+            dispatch(logoutUser());
+          } else {
+            dispatch({ type: actionType, payload: payload });
+          }
+        });
+      }
     }
     dispatch(hideModal());
   };

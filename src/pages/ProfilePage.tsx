@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from "../store";
-import { updateUser } from "../store/slices/authSlice";
+import { updateProfileAsync } from "../store/slices/authSlice";
 import { addToast, showModal } from "../store/slices/uiSlice";
 import { useState } from "react";
 
@@ -9,11 +9,11 @@ const ProfilePage = () => {
   const savedGames = useAppSelector((state) => state.history.savedGames);
   const dispatch = useAppDispatch();
 
-  const [name, setName] = useState(user?.name || "");
+  const [name, setName] = useState(user?.username || "");
 
   const handleUpdate = () => {
     if (name.trim()) {
-      dispatch(updateUser({ name: name.trim() }));
+      dispatch(updateProfileAsync({ username: name.trim() }));
       dispatch(
         addToast({ message: "Profile updated successfully!", type: "success" }),
       );
@@ -21,7 +21,7 @@ const ProfilePage = () => {
   };
 
   const handleUpdateColor = (color: string) => {
-    dispatch(updateUser({ name: user!.name, color }));
+    dispatch(updateProfileAsync({ avatar_color: color }));
   };
 
   const handleClearAll = () => {
@@ -59,11 +59,13 @@ const ProfilePage = () => {
             <div
               className={`w-24 h-24 rounded-full bg-gradient-to-br ${user?.avatarColor} flex items-center justify-center text-3xl text-white font-bold shadow-lg ring-4 ring-white ring-offset-4 ring-offset-slate-50`}
             >
-              {name.charAt(0).toUpperCase()}
+              {(name || user?.username || user?.email || "?")
+                .charAt(0)
+                .toUpperCase()}
             </div>
             <div>
               <h2 className="text-2xl font-bold text-slate-900">
-                {user?.name}
+                {user?.username || user?.email}
               </h2>
               <p className="text-slate-500">Player Account</p>
             </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { GameConfig } from "../types/game"; // Keep using Context types for now
 import { useAppSelector, useAppDispatch } from "../store";
-import { saveRule } from "../store/slices/rulesSlice";
+import { saveRuleAsync } from "../store/slices/rulesSlice";
 import RuleConfigModal from "./RuleConfigModal";
 
 interface GameSetupProps {
@@ -62,10 +62,11 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
     onStartGame(filteredNames, selectedRule.config);
   };
 
-  const handleSaveNewRule = (name: string, config: GameConfig) => {
-    const newId = crypto.randomUUID();
-    dispatch(saveRule({ id: newId, name, config }));
-    setSelectedRuleId(newId); // Auto-select the new rule using the known ID
+  const handleSaveNewRule = async (name: string, config: GameConfig) => {
+    const resultAction = await dispatch(saveRuleAsync({ name, config }));
+    if (saveRuleAsync.fulfilled.match(resultAction)) {
+      setSelectedRuleId(resultAction.payload.id);
+    }
     setIsModalOpen(false);
   };
 

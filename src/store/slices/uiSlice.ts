@@ -13,8 +13,8 @@ export interface Modal {
   message: string;
   confirmLabel?: string;
   cancelLabel?: string;
-  onConfirm?: string; // Action type to dispatch on confirm
-  onCancel?: string; // Action type to dispatch on cancel
+  onConfirm?: string | (() => void); // Action type or callback
+  onCancel?: string | (() => void); // Action type or callback
   type?: "danger" | "info";
   payload?: any;
 }

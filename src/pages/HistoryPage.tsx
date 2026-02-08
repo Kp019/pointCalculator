@@ -1,13 +1,27 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../store";
-import { loadGame } from "../store/slices/gameSlice";
-import { showModal } from "../store/slices/uiSlice";
+import { loadGameAsync } from "../store/slices/gameSlice";
+import {
+  fetchHistory,
+  deleteGameAsync,
+  updateGameAsync,
+} from "../store/slices/historySlice";
+import { showModal, addToast } from "../store/slices/uiSlice";
 import type { SavedGame } from "../types/game";
+import { useState } from "react";
+import EditGameModal from "../components/EditGameModal";
 
 const HistoryPage = () => {
   const savedGames = useAppSelector((state) => state.history.savedGames);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingGame, setEditingGame] = useState<SavedGame | null>(null);
+
+  useEffect(() => {
+    dispatch(fetchHistory());
+  }, [dispatch]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString(undefined, {
@@ -19,9 +33,27 @@ const HistoryPage = () => {
     });
   };
 
-  const handleLoad = (game: any) => {
-    dispatch(loadGame(game));
+  const handleLoad = async (gameId: string) => {
+    await dispatch(loadGameAsync(gameId));
     navigate("/game");
+  };
+
+  const handleEdit = (game: SavedGame) => {
+    setEditingGame(game);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveGame = (name: string) => {
+    if (editingGame) {
+      dispatch(updateGameAsync({ ...editingGame, name }));
+      dispatch(
+        addToast({
+          message: "Game updated successfully",
+          type: "success",
+        }),
+      );
+      setIsEditModalOpen(false);
+    }
   };
 
   return (
@@ -82,7 +114,11 @@ const HistoryPage = () => {
                           d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                         />
                       </svg>
-                      {formatDate(game.date || new Date().toISOString())}
+                      {formatDate(
+                        game.created_at ||
+                          game.date ||
+                          new Date().toISOString(),
+                      )}
                     </span>
                     <span className="flex items-center gap-1">
                       <svg
@@ -106,14 +142,43 @@ const HistoryPage = () => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
+                      handleEdit(game);
+                    }}
+                    className="p-3 text-slate-400 hover:bg-primary-50 hover:text-primary-600 rounded-xl transition-colors"
+                    title="Edit Name"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
                       dispatch(
                         showModal({
                           title: "Delete Game History?",
                           message:
                             "Are you sure you want to delete this game? This action cannot be undone.",
                           confirmLabel: "Delete Game",
-                          onConfirm: "history/deleteGame",
-                          payload: game.id,
+                          onConfirm: async () => {
+                            await dispatch(deleteGameAsync(game.id));
+                            dispatch(
+                              addToast({
+                                message: "Game deleted",
+                                type: "success",
+                              }),
+                            );
+                          },
                           type: "danger",
                         }),
                       );
@@ -136,7 +201,7 @@ const HistoryPage = () => {
                     </svg>
                   </button>
                   <button
-                    onClick={() => handleLoad(game)}
+                    onClick={() => handleLoad(game.id)}
                     className="px-6 py-3 bg-primary-50 text-primary-600 font-bold rounded-xl hover:bg-primary-100 transition-colors flex items-center gap-2"
                   >
                     Resume
@@ -160,6 +225,13 @@ const HistoryPage = () => {
           ))}
         </div>
       )}
+
+      <EditGameModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onSave={handleSaveGame}
+        initialName={editingGame?.name || ""}
+      />
     </div>
   );
 };

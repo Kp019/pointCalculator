@@ -30,12 +30,14 @@ export interface SavedRule {
 
 export interface SavedGame {
   id: string;
-  date: string;
   name: string;
-  players: string[];
-  winner?: string;
   config: GameConfig;
+  players: Player[];
   rounds: Round[];
   currentRound: number;
-  gameState?: any; // To allow loading the full redux state
+  winner: string | null;
+  user_id?: string;
+  created_at?: string;
+  updated_at?: string;
+  date?: string; // Legacy
 }

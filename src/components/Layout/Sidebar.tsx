@@ -104,11 +104,12 @@ const Sidebar = () => {
           <div
             className={`w-10 h-10 rounded-full bg-linear-to-br ${user?.avatarColor || "from-slate-400 to-slate-500"} flex items-center justify-center text-white font-black text-xs shadow-md`}
           >
-            {user?.name.charAt(0).toUpperCase()}
+            {user?.username?.charAt(0).toUpperCase() ||
+              user?.email.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-black text-slate-900 truncate">
-              {user?.name}
+              {user?.username || user?.email}
             </p>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
               Player

@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RuleConfigModal from "../components/RuleConfigModal";
 import type { GameConfig, SavedRule } from "../types/game";
 import { useAppSelector, useAppDispatch } from "../store";
-import { saveRule } from "../store/slices/rulesSlice";
+import {
+  saveRuleAsync,
+  deleteRuleAsync,
+  fetchRules,
+} from "../store/slices/rulesSlice";
 import { showModal, addToast } from "../store/slices/uiSlice";
 
 const RulesPage = () => {
@@ -10,6 +14,10 @@ const RulesPage = () => {
   const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingRule, setEditingRule] = useState<SavedRule | null>(null);
+
+  useEffect(() => {
+    dispatch(fetchRules());
+  }, [dispatch]);
 
   const handleCreateNew = () => {
     setEditingRule(null);
@@ -22,7 +30,7 @@ const RulesPage = () => {
   };
 
   const handleSaveRule = (name: string, config: GameConfig) => {
-    dispatch(saveRule({ id: editingRule?.id, name, config }));
+    dispatch(saveRuleAsync({ id: editingRule?.id, name, config }));
     dispatch(
       addToast({
         message: `Rule "${name}" saved successfully!`,
@@ -38,8 +46,10 @@ const RulesPage = () => {
         title: "Delete Rule Preset?",
         message: "Are you sure you want to delete this rule preset?",
         confirmLabel: "Delete Rule",
-        onConfirm: "rules/deleteRule",
-        payload: id,
+        onConfirm: async () => {
+          await dispatch(deleteRuleAsync(id));
+          dispatch(addToast({ message: "Rule deleted", type: "success" }));
+        },
         type: "danger",
       }),
     );

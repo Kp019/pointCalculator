@@ -2,14 +2,14 @@ import { useNavigate } from "react-router-dom";
 import GameSetup from "../components/GameSetup";
 import type { GameConfig } from "../types/game";
 import { useAppDispatch } from "../store";
-import { startGame } from "../store/slices/gameSlice";
+import { createGameAsync } from "../store/slices/gameSlice";
 
 const SetupPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleStartGame = (playerNames: string[], config: GameConfig) => {
-    dispatch(startGame({ playerNames, config }));
+  const handleStartGame = async (playerNames: string[], config: GameConfig) => {
+    await dispatch(createGameAsync({ playerNames, config }));
     navigate("/game");
   };
 

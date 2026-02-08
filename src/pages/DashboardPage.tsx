@@ -1,11 +1,18 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../store";
+import { useAppSelector, useAppDispatch } from "../store";
+import { fetchHistory } from "../store/slices/historySlice";
 
 const DashboardPage = () => {
   const user = useAppSelector((state) => state.auth.user);
   const savedGames = useAppSelector((state) => state.history.savedGames);
   const gameStarted = useAppSelector((state) => state.game.gameStarted);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchHistory());
+  }, [dispatch]);
 
   // Calculate some stats
   const totalGames = savedGames.length;
@@ -17,7 +24,7 @@ const DashboardPage = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
           <h1 className="text-3xl font-black text-slate-900">
-            Hello, {user?.name}
+            Hello, {user?.username || user?.email}
           </h1>
           <p className="text-slate-500 font-medium mt-1">
             Ready to calculate some points?

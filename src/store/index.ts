@@ -13,6 +13,13 @@ export const store = configureStore({
     rules: rulesReducer,
     ui: uiReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["ui/showModal"],
+        ignoredPaths: ["ui.modal.onConfirm", "ui.modal.onCancel"],
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

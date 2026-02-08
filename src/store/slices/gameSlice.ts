@@ -1,8 +1,14 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 import type { GameConfig, Player, Round } from "../../types/game";
 import type { RootState } from "..";
+import { api } from "../../services/api";
 
 interface GameState {
+  id: string | null;
   players: Player[];
   config: GameConfig | null;
   currentRound: number;
@@ -13,6 +19,7 @@ interface GameState {
 }
 
 const initialState: GameState = {
+  id: null,
   players: [],
   config: null,
   currentRound: 1,
@@ -21,6 +28,58 @@ const initialState: GameState = {
   winner: null,
   rounds: [],
 };
+
+// Async Thunks
+export const createGameAsync = createAsyncThunk(
+  "game/createGame",
+  async (payload: { playerNames: string[]; config: GameConfig }) => {
+    const { playerNames, config } = payload;
+    const players: Player[] = playerNames.map((name, index) => ({
+      id: `player-${index}`,
+      name,
+      scores: [],
+      totalScore: 0,
+    }));
+
+    const gameData = {
+      name: `Game ${new Date().toLocaleString()}`,
+      config,
+      players,
+      rounds: [],
+      currentRound: 1,
+      winner: null,
+    };
+
+    const { data } = await api.post<any>("/games/", gameData);
+    return data;
+  },
+);
+
+export const updateGameAsync = createAsyncThunk(
+  "game/updateGame",
+  async (_, { getState }) => {
+    const state = (getState() as RootState).game;
+    if (!state.id) return;
+
+    const gameUpdate = {
+      players: state.players,
+      rounds: state.rounds,
+      currentRound: state.currentRound,
+      winner: state.winner?.name || null,
+    };
+
+    const { data } = await api.put<any>(`/games/${state.id}`, gameUpdate);
+    return data;
+  },
+);
+
+export const loadGameAsync = createAsyncThunk(
+  "game/loadGame",
+  async (gameId: string) => {
+    const { data } = await api.get<any>(`/games/${gameId}`);
+    return data;
+  },
+);
 
 const gameSlice = createSlice({
   name: "game",
@@ -119,19 +178,47 @@ const gameSlice = createSlice({
       return initialState;
     },
     loadGame: (state, action: PayloadAction<any>) => {
-      state.players = action.payload.players;
-      state.rounds = action.payload.rounds;
-      state.currentRound = action.payload.currentRound;
-      state.config = action.payload.config;
+      state.id = action.payload.id || null;
+      state.players = action.payload.players || [];
+      state.rounds = action.payload.rounds || [];
+      state.currentRound = action.payload.currentRound || 1;
+      state.config = action.payload.config || null;
       state.gameStarted = true;
       state.gameEnded = false;
       checkGameEnd(state);
     },
+    setGameId: (state, action: PayloadAction<string>) => {
+      state.id = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createGameAsync.fulfilled, (state, action) => {
+        state.id = action.payload.id;
+        state.players = action.payload.players || [];
+        state.config = action.payload.config;
+        state.currentRound = action.payload.currentRound || 1;
+        state.gameStarted = true;
+        state.gameEnded = false;
+        state.rounds = action.payload.rounds || [];
+        checkGameEnd(state);
+      })
+      .addCase(loadGameAsync.fulfilled, (state, action) => {
+        state.id = action.payload.id;
+        state.players = action.payload.players || [];
+        state.config = action.payload.config;
+        state.currentRound = action.payload.currentRound || 1;
+        state.gameStarted = true;
+        state.gameEnded = false;
+        state.rounds = action.payload.rounds || [];
+        checkGameEnd(state);
+      });
   },
 });
 
 function getEliminatedPlayerIds(players: Player[], config: GameConfig) {
   const eliminated = new Set<string>();
+  if (!players || !Array.isArray(players)) return eliminated;
   if (config.gameMode === "elimination") {
     players.forEach((p) => {
       if (p.totalScore >= config.targetPoints) {
@@ -177,6 +264,7 @@ function checkGameEnd(state: GameState) {
 }
 
 function getSortedPlayers(players: Player[], config: GameConfig) {
+  if (!players || !Array.isArray(players)) return [];
   const eliminatedIds = getEliminatedPlayerIds(players, config);
   return [...players].sort((a, b) => {
     const aEliminated = eliminatedIds.has(a.id);
@@ -211,5 +299,6 @@ export const {
   deleteScore,
   resetGame,
   loadGame,
+  setGameId,
 } = gameSlice.actions;
 export default gameSlice.reducer;

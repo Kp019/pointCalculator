@@ -9,8 +9,14 @@ import {
   deleteScore,
   selectEliminatedPlayerIds,
   selectSortedPlayers,
+  updateGameAsync as autoUpdateGameAsync,
+  setGameId,
 } from "../store/slices/gameSlice";
-import { saveGame } from "../store/slices/historySlice";
+import {
+  saveGameAsync,
+  updateGameAsync as updateHistoryGameAsync,
+} from "../store/slices/historySlice";
+import type { SavedGame } from "../types/game";
 import { addToast, showModal } from "../store/slices/uiSlice";
 
 const GamePage = () => {
@@ -31,38 +37,55 @@ const GamePage = () => {
 
   if (!gameStarted || !config) return null;
 
-  const handleAddRoundScores = (scores: { [playerId: string]: number }) => {
+  const handleAddRoundScores = async (scores: {
+    [playerId: string]: number;
+  }) => {
     dispatch(addRoundScores(scores));
+    await dispatch(autoUpdateGameAsync());
   };
 
-  const handleUpdateScore = (
+  const handleUpdateScore = async (
     playerId: string,
     roundIndex: number,
     newScore: number,
   ) => {
     dispatch(updateScore({ playerId, roundIndex, newScore }));
+    await dispatch(autoUpdateGameAsync());
   };
 
-  const handleDeleteScore = (playerId: string, roundIndex: number) => {
+  const handleDeleteScore = async (playerId: string, roundIndex: number) => {
     dispatch(deleteScore({ playerId, roundIndex }));
+    await dispatch(autoUpdateGameAsync());
   };
 
-  const handleSaveGame = () => {
-    const gameToSave = {
-      id: crypto.randomUUID(),
-      date: new Date().toISOString(),
+  const handleSaveGame = async () => {
+    const gameData: SavedGame = {
+      id: game.id || "", // ID is optional for creation
       name: `Game ${new Date().toLocaleDateString()}`,
-      players: players.map((p) => p.name),
-      winner: gameEnded ? sortedPlayers[0]?.name : undefined,
       config: config,
+      players: players,
       rounds: rounds,
       currentRound: currentRound,
-      gameState: game,
+      winner: gameEnded ? sortedPlayers[0]?.name || null : null,
     };
-    dispatch(saveGame(gameToSave));
-    dispatch(
-      addToast({ message: "Game Saved Successfully!", type: "success" }),
-    );
+
+    if (game.id) {
+      // Update existing game
+      await dispatch(updateHistoryGameAsync(gameData));
+      dispatch(
+        addToast({ message: "Game Updated Successfully!", type: "success" }),
+      );
+    } else {
+      // Save new game
+      const resultAction = await dispatch(saveGameAsync(gameData));
+      if (saveGameAsync.fulfilled.match(resultAction)) {
+        // Update local game with the ID from backend
+        dispatch(setGameId(resultAction.payload.id));
+        dispatch(
+          addToast({ message: "Game Saved Successfully!", type: "success" }),
+        );
+      }
+    }
   };
 
   const handleResetGame = () => {
