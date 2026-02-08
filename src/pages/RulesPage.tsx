@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import RuleConfigModal from "../components/RuleConfigModal";
 import type { GameConfig, SavedRule } from "../types/game";
 import { useAppSelector, useAppDispatch } from "../store";
 import {
   saveRuleAsync,
   deleteRuleAsync,
-  fetchRules,
 } from "../store/slices/rulesSlice";
 import { showModal, addToast } from "../store/slices/uiSlice";
 
@@ -14,10 +13,6 @@ const RulesPage = () => {
   const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingRule, setEditingRule] = useState<SavedRule | null>(null);
-
-  useEffect(() => {
-    dispatch(fetchRules());
-  }, [dispatch]);
 
   const handleCreateNew = () => {
     setEditingRule(null);

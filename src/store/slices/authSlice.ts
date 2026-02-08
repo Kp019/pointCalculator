@@ -113,6 +113,20 @@ export const updateProfileAsync = createAsyncThunk(
   },
 );
 
+export const fetchProfile = createAsyncThunk(
+  "auth/fetchProfile",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get("/auth/me");
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.detail || "Failed to fetch profile",
+      );
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -176,6 +190,22 @@ const authSlice = createSlice({
 
     // Update Profile
     builder.addCase(updateProfileAsync.fulfilled, (state, action) => {
+      if (state.user) {
+        const updatedUser = { ...state.user, ...action.payload };
+        // Sync avatarColor shim if needed
+        if (action.payload.avatar_color) {
+          updatedUser.avatarColor = action.payload.avatar_color;
+        }
+        state.user = updatedUser;
+        localStorage.setItem(
+          "pointCalculator_user",
+          JSON.stringify(updatedUser),
+        );
+      }
+    });
+
+    // Fetch Profile
+    builder.addCase(fetchProfile.fulfilled, (state, action) => {
       if (state.user) {
         const updatedUser = { ...state.user, ...action.payload };
         // Sync avatarColor shim if needed

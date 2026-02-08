@@ -12,26 +12,30 @@ import ProfilePage from "./pages/ProfilePage";
 import GamePage from "./pages/GamePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import AppInitializer from "./components/AppInitializer";
+
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+      <AppInitializer>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<MainLayout />}>
-              <Route index element={<DashboardPage />} />
-              <Route path="new" element={<SetupPage />} />
-              <Route path="history" element={<HistoryPage />} />
-              <Route path="rules" element={<RulesPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="game" element={<GamePage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<MainLayout />}>
+                <Route index element={<DashboardPage />} />
+                <Route path="new" element={<SetupPage />} />
+                <Route path="history" element={<HistoryPage />} />
+                <Route path="rules" element={<RulesPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="game" element={<GamePage />} />
+              </Route>
             </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </AppInitializer>
     </Provider>
   );
 }
