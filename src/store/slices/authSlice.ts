@@ -205,7 +205,12 @@ const authSlice = createSlice({
     });
 
     // Fetch Profile
+    builder.addCase(fetchProfile.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
     builder.addCase(fetchProfile.fulfilled, (state, action) => {
+      state.loading = false;
       if (state.user) {
         const updatedUser = { ...state.user, ...action.payload };
         // Sync avatarColor shim if needed
@@ -218,6 +223,10 @@ const authSlice = createSlice({
           JSON.stringify(updatedUser),
         );
       }
+    });
+    builder.addCase(fetchProfile.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
     });
   },
 });

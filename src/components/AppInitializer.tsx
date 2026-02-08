@@ -9,14 +9,23 @@ interface AppInitializerProps {
 
 const AppInitializer: React.FC<AppInitializerProps> = ({ children }) => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, loading: authLoading } = useAppSelector((state) => state.auth);
+  const { loading: rulesLoading, savedRules } = useAppSelector(
+    (state) => state.rules,
+  );
 
   useEffect(() => {
-    if (user) {
-      dispatch(fetchRules());
-      dispatch(fetchProfile());
+    if (user?.id) {
+      // Fetch rules if not already loading and not already fetched
+      if (!rulesLoading && savedRules.length === 0) {
+        dispatch(fetchRules());
+      }
+      // Fetch profile if not already loading
+      if (!authLoading) {
+        dispatch(fetchProfile());
+      }
     }
-  }, [dispatch, user]);
+  }, [dispatch, user?.id]);
 
   return <>{children}</>;
 };
