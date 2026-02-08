@@ -174,8 +174,12 @@ const DashboardPage = () => {
               <div>
                 <div className="font-bold text-slate-900">{lastGame.name}</div>
                 <div className="text-xs text-slate-500">
-                  {new Date(lastGame.date).toLocaleDateString()} •{" "}
-                  {lastGame.players?.length || 0} Players
+                  {new Date(
+                    lastGame.created_at ||
+                      lastGame.date ||
+                      new Date().toISOString(),
+                  ).toLocaleDateString()}{" "}
+                  • {lastGame.players?.length || 0} Players
                 </div>
               </div>
             </div>
