@@ -174,7 +174,20 @@ const gameSlice = createSlice({
       }
       checkGameEnd(state);
     },
-    resetGame: () => {
+    resetGame: (state) => {
+      state.players = state.players.map((player) => ({
+        ...player,
+        scores: [],
+        totalScore: 0,
+      }));
+      state.rounds = [];
+      state.currentRound = 1;
+      state.gameEnded = false;
+      state.winner = null;
+      state.id = null; // Reset ID for a fresh start
+      state.gameStarted = true;
+    },
+    exitGame: () => {
       return initialState;
     },
     loadGame: (state, action: PayloadAction<any>) => {
@@ -218,8 +231,17 @@ const gameSlice = createSlice({
 
 function getEliminatedPlayerIds(players: Player[], config: GameConfig) {
   const eliminated = new Set<string>();
-  if (!players || !Array.isArray(players)) return eliminated;
-  if (config.gameMode === "elimination") {
+  if (!players || !Array.isArray(players) || !config) return eliminated;
+
+  // Elimination only makes sense if:
+  // 1. Game mode is elimination
+  // 2. Win condition is lowest (like Rummy/Golf, where points are bad)
+  // 3. Winning metric involves points
+  if (
+    config.gameMode === "elimination" &&
+    config.winCondition === "lowest" &&
+    config.winMetric !== "rounds"
+  ) {
     players.forEach((p) => {
       if (p.totalScore >= config.targetPoints) {
         eliminated.add(p.id);
@@ -250,7 +272,8 @@ function checkGameEnd(state: GameState) {
       const activePlayers = state.players.filter(
         (p) => !eliminatedIds.has(p.id),
       );
-      if (activePlayers.length <= 1 && state.players.length > 1) ended = true;
+      // End if only 1 (or 0) players remain active
+      if (activePlayers.length <= 1) ended = true;
     }
   }
 
@@ -298,6 +321,7 @@ export const {
   updateScore,
   deleteScore,
   resetGame,
+  exitGame,
   loadGame,
   setGameId,
 } = gameSlice.actions;

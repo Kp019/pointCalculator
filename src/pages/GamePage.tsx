@@ -91,11 +91,24 @@ const GamePage = () => {
   const handleResetGame = () => {
     dispatch(
       showModal({
-        title: "Reset Game?",
+        title: "New Game with Same Players?",
         message:
-          "Are you sure you want to reset the current game? All unsaved progress will be lost.",
-        confirmLabel: "Reset Game",
+          "This will clear all scores and rounds while keeping your current players. Are you ready to start a fresh game?",
+        confirmLabel: "Start New Game",
         onConfirm: "game/resetGame",
+        type: "danger",
+      }),
+    );
+  };
+
+  const handleExitGame = () => {
+    dispatch(
+      showModal({
+        title: "Exit Game?",
+        message:
+          "Are you sure you want to exit? All unsaved progress will be lost and you will return to the setup screen.",
+        confirmLabel: "Exit Game",
+        onConfirm: "game/exitGame",
         type: "danger",
       }),
     );
@@ -162,6 +175,7 @@ const GamePage = () => {
           <button
             onClick={handleResetGame}
             className="btn-secondary group flex-1 sm:flex-none"
+            title="Start new game with same players"
           >
             <span className="flex items-center justify-center gap-2">
               <svg
@@ -179,6 +193,25 @@ const GamePage = () => {
               </svg>
               New Game
             </span>
+          </button>
+          <button
+            onClick={handleExitGame}
+            className="p-3 text-slate-400 hover:text-rose-500 transition-colors"
+            title="Exit Game"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
           </button>
         </div>
       </div>
