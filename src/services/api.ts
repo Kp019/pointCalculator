@@ -1,8 +1,12 @@
 import axios from "axios";
 
+const baseUrl = import.meta.env.DEV
+  ? "http://localhost:9000/api/v1"
+  : "https://point-calculatorbackend.vercel.app/api/v1";
+
 // Create axios instance with base URL
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://point-calculatorbackend.vercel.app/api/v1",
+  baseURL: baseUrl,
   headers: {
     "Content-Type": "application/json",
   },
