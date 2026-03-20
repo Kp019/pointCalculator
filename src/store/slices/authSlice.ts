@@ -41,7 +41,7 @@ export const loginUser = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await api.post("/auth/login", credentials);
+      const response = await api.post("/auth/login/", credentials);
       // The backend returns { access_token, token_type, user: { ... } }
       const { access_token, user } = response.data;
       return { ...user, token: access_token };
@@ -68,7 +68,7 @@ export const signupUser = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await api.post("/auth/signup", userData);
+      const response = await api.post("/auth/signup/", userData);
       const { access_token, user } = response.data;
       return { ...user, token: access_token };
     } catch (error: any) {
@@ -88,7 +88,7 @@ export const signupUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk("auth/logout", async () => {
   try {
-    await api.post("/auth/logout");
+    await api.post("/auth/logout/");
     return null;
   } catch (error: any) {
     // Even if logout fails on server, we clear local state
@@ -103,7 +103,7 @@ export const updateProfileAsync = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await api.put("/auth/me", updateData);
+      const response = await api.put("/auth/me/", updateData);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -117,7 +117,7 @@ export const fetchProfile = createAsyncThunk(
   "auth/fetchProfile",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get("/auth/me");
+      const response = await api.get("/auth/me/");
       return response.data;
     } catch (error: any) {
       return rejectWithValue(

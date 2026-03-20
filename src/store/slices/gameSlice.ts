@@ -68,7 +68,7 @@ export const updateGameAsync = createAsyncThunk(
       winner: state.winner?.name || null,
     };
 
-    const { data } = await api.put<any>(`/games/${state.id}`, gameUpdate);
+    const { data } = await api.put<any>(`/games/${state.id}/`, gameUpdate);
     return data;
   },
 );
@@ -76,7 +76,7 @@ export const updateGameAsync = createAsyncThunk(
 export const loadGameAsync = createAsyncThunk(
   "game/loadGame",
   async (gameId: string) => {
-    const { data } = await api.get<any>(`/games/${gameId}`);
+    const { data } = await api.get<any>(`/games/${gameId}/`);
     return data;
   },
 );

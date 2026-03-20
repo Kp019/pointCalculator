@@ -15,7 +15,7 @@ const initialState: RulesState = {
 };
 
 export const fetchRules = createAsyncThunk("rules/fetchRules", async () => {
-  const response = await api.get<SavedRule[]>("/rules");
+  const response = await api.get<SavedRule[]>("/rules/");
   return response.data;
 });
 
@@ -24,10 +24,10 @@ export const saveRuleAsync = createAsyncThunk(
   async (payload: { id?: string; name: string; config: GameConfig }) => {
     if (payload.id) {
       const { id, ...updateData } = payload;
-      const response = await api.put<SavedRule>(`/rules/${id}`, updateData);
+      const response = await api.put<SavedRule>(`/rules/${id}/`, updateData);
       return response.data;
     } else {
-      const response = await api.post<SavedRule>("/rules", payload);
+      const response = await api.post<SavedRule>("/rules/", payload);
       return response.data;
     }
   },
@@ -36,7 +36,7 @@ export const saveRuleAsync = createAsyncThunk(
 export const deleteRuleAsync = createAsyncThunk(
   "rules/deleteRule",
   async (id: string) => {
-    await api.delete(`/rules/${id}`);
+    await api.delete(`/rules/${id}/`);
     return id;
   },
 );
