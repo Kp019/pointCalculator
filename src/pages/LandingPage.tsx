@@ -362,7 +362,7 @@ const InteractiveDemoSection = () => {
                     </motion.div>
                     <button
                       onClick={() => addScore(player.id, 10)}
-                      className="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center hover:bg-primary-600 hover:scale-110 active:scale-75 transition-all shadow-xl shadow-slate-900/10"
+                      className="w-12 h-12 bg-primary-500 text-white rounded-2xl flex items-center justify-center hover:bg-slate-900 hover:scale-110 active:scale-75 transition-all shadow-xl shadow-primary-500/20"
                     >
                       +
                     </button>
@@ -416,7 +416,7 @@ const LandingPage = () => {
     {
       title: "Configure Rules",
       icon: "⚡",
-      color: "from-orange-500 to-amber-600",
+      color: "from-slate-500 to-amber-600",
       desc: "Set win conditions and target limits. Choose between high or low score victories for total control.",
     },
     {
@@ -516,7 +516,7 @@ const LandingPage = () => {
           <div className="lg:col-span-7">
             <motion.div 
               variants={fadeInUp}
-              className="inline-flex items-center gap-4 px-8 py-4 rounded-3xl bg-white border border-slate-100 shadow-sm text-xs font-black uppercase tracking-[0.2em] mb-12"
+              className="inline-flex items-center gap-4 px-8 py-4 rounded-3xl bg-white border border-primary-100/50 shadow-sm text-xs font-black uppercase tracking-[0.2em] mb-12"
             >
               <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
               <span className="text-slate-400">Invite Only</span>
@@ -552,7 +552,7 @@ const LandingPage = () => {
               <motion.div variants={scaleIn}>
                 <Link
                   to="/quick-play"
-                  className="btn-secondary text-xl px-16 py-8 border-2 border-slate-100 hover:border-slate-200 bg-white shadow-xl shadow-slate-200/20 block"
+                  className="btn-secondary text-xl px-16 py-8 border-2 border-primary-100/50 hover:border-slate-200 bg-white shadow-xl shadow-slate-200/20 block"
                 >
                   Try Quick Play
                 </Link>
@@ -571,7 +571,7 @@ const LandingPage = () => {
       {/* Feature Stream */}
       <section
         id="features"
-        className="py-64 px-6 bg-white/40 border-y border-slate-100"
+        className="py-64 px-6 bg-white/40 border-y border-primary-100/50"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div 
@@ -602,7 +602,7 @@ const LandingPage = () => {
                 whileHover={{ scale: 1.8, rotate: 15 }}
                 className="absolute -right-16 -top-16 w-56 h-56 bg-primary-500/5 rounded-full blur-3xl group-hover:bg-primary-500/20 transition-all duration-700" 
               />
-              <div className="w-24 h-24 bg-primary-50 rounded-4xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-700 shadow-xl shadow-primary-500/5 border border-primary-100/50">
+              <div className="w-24 h-24 bg-white rounded-4xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-700 shadow-xl shadow-primary-500/5 border border-primary-100/50">
                 <svg
                   className="w-12 h-12 text-primary-600"
                   fill="none"
@@ -728,7 +728,7 @@ const LandingPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-32 items-center">
               <div className="space-y-10 relative">
                 {/* Vertical Progress Line (Mobile) */}
-                <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-slate-50 lg:hidden rounded-full" />
+                <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary-50 lg:hidden rounded-full" />
 
                 {guideSteps.map((step, i) => {
                   const start = i / guideSteps.length;
@@ -746,7 +746,7 @@ const LandingPage = () => {
                       <div className="flex items-center gap-6 mb-4">
                         <motion.div
                           animate={activeStep === i ? { scale: 1.1, rotate: 12 } : { scale: 1, rotate: 0 }}
-                          className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-xl transition-all duration-700 bg-linear-to-br ${activeStep === i ? step.color + " shadow-primary-500/20 text-white" : "bg-white text-slate-400 border border-slate-100"}`}
+                          className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-xl transition-all duration-700 bg-linear-to-br ${activeStep === i ? step.color + " shadow-primary-500/20 text-white" : "bg-white text-slate-400 border border-primary-100/50"}`}
                         >
                           {step.icon}
                         </motion.div>
@@ -795,7 +795,7 @@ const LandingPage = () => {
                       opacity: [0.15, 0.25, 0.15]
                     }}
                     transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 bg-linear-to-br from-primary-500/20 to-accent-600/20 rounded-[6rem] blur-[120px]" 
+                    className="absolute inset-0 bg-linear-to-br from-primary-500/20 to-orange-600/20 rounded-[6rem] blur-[120px]" 
                   />
                   
                   <motion.div
@@ -818,24 +818,24 @@ const LandingPage = () => {
                           className="absolute inset-0 p-8 sm:p-16 flex flex-col items-center justify-center"
                         >
                           <div className="w-full max-w-sm bg-white/90 backdrop-blur-xl rounded-[2.5rem] p-10 shadow-2xl border border-white flex flex-col gap-8">
-                            <div className="flex items-center justify-between border-b border-slate-100 pb-5">
+                            <div className="flex items-center justify-between border-b border-primary-100/50 pb-5">
                               <span className="font-black text-slate-800 text-2xl">Add Players</span>
                               <span className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xl">+</span>
                             </div>
                             <div className="space-y-5">
                               {['Alpha', 'Beta'].map((name, idx) => (
-                                <div key={idx} className="flex items-center gap-5 p-4 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors">
+                                <div key={idx} className="flex items-center gap-5 p-4 rounded-xl hover:bg-primary-50 border border-transparent hover:border-primary-100/50 transition-colors">
                                   <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-black text-lg shadow-md ${idx === 0 ? 'bg-primary-500' : 'bg-accent-500'}`}>{name[0]}</div>
                                   <span className="font-bold text-xl text-slate-700 flex-1">{name}</span>
                                   <span className="text-slate-300 text-xl">⋮</span>
                                 </div>
                               ))}
-                              <div className="flex items-center gap-5 p-4 rounded-xl bg-slate-50 border border-slate-100 border-dashed">
+                              <div className="flex items-center gap-5 p-4 rounded-xl bg-white/50 border border-primary-100/50 border-dashed">
                                 <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 font-black text-xl">+</div>
                                 <span className="font-bold text-xl text-slate-400">New Player</span>
                               </div>
                             </div>
-                            <button className="w-full py-5 bg-slate-900 text-white rounded-2xl text-xl font-black shadow-lg shadow-slate-900/20 hover:scale-[1.02] transition-transform">Continue</button>
+                            <button className="w-full py-5 bg-primary-500 text-white rounded-2xl text-xl font-black shadow-lg shadow-primary-500/20 hover:scale-[1.02] transition-transform hover:bg-slate-900">Continue</button>
                           </div>
                         </motion.div>
                       )}
@@ -941,14 +941,14 @@ const LandingPage = () => {
                   <motion.div 
                     animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute -top-8 -right-8 w-24 h-24 bg-white rounded-2xl shadow-2xl flex items-center justify-center text-3xl border border-slate-100"
+                    className="absolute -top-8 -right-8 w-24 h-24 bg-white rounded-2xl shadow-2xl flex items-center justify-center text-3xl border border-primary-100/50"
                   >
                     📈
                   </motion.div>
                   <motion.div 
                     animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
                     transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute -bottom-8 -left-8 w-32 h-32 bg-white rounded-3xl shadow-2xl flex items-center justify-center text-4xl border border-slate-100"
+                    className="absolute -bottom-8 -left-8 w-32 h-32 bg-white rounded-3xl shadow-2xl flex items-center justify-center text-4xl border border-primary-100/50"
                   >
                     🎮
                   </motion.div>
@@ -960,7 +960,7 @@ const LandingPage = () => {
       </section>
 
       {/* Minimalist Light Footer & CTA */}
-      <footer className="bg-white border-t border-slate-100 pt-64 px-6 overflow-hidden relative">
+      <footer className="bg-white border-t border-primary-100/50 pt-64 px-6 overflow-hidden relative">
         {/* Subtle Background Elements */}
         <div className="absolute inset-0 bg-grid-slate pointer-events-none opacity-[0.03]" />
         <motion.div 
@@ -969,7 +969,7 @@ const LandingPage = () => {
             opacity: [0.3, 0.5, 0.3]
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary-50/40 rounded-full blur-[160px] z-0" 
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-slate-50/40 rounded-full blur-[160px] z-0" 
         />
 
         <div className="max-w-7xl mx-auto relative z-10 text-center">
@@ -1017,14 +1017,14 @@ const LandingPage = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="mailto:krishnaprasadr666@gmail.com?subject=Request Pro Access"
-                className="btn-primary text-2xl px-24 py-9 bg-slate-900 hover:bg-primary-600 shadow-2xl shadow-slate-900/20 border-none"
+                className="btn-primary text-2xl px-24 py-9 shadow-2xl shadow-primary-500/20 border-none"
               >
                 Request Access
               </motion.a>
               <motion.div variants={scaleIn}>
                 <Link
                   to="/quick-play"
-                  className="btn-secondary text-2xl px-24 py-9 border-2 border-slate-100 hover:border-slate-300 bg-white shadow-xl shadow-slate-200/20 block"
+                  className="btn-secondary text-2xl px-24 py-9 border-2 border-primary-100/50 hover:border-slate-300 bg-white shadow-xl shadow-slate-200/20 block"
                 >
                   Quick Launch
                 </Link>

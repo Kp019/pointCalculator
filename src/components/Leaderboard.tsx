@@ -40,11 +40,11 @@ const Leaderboard = ({
     isEliminated: boolean,
   ) => {
     if (isEliminated) return "from-slate-200 to-slate-300";
-    if (isPlayerWinner) return "from-yellow-400 to-orange-500 shadow-yellow-500/50";
+    if (isPlayerWinner) return "from-yellow-400 to-slate-500 shadow-yellow-500/50";
     switch (rank) {
       case 0: return "from-yellow-400 to-amber-600 shadow-yellow-500/40";
       case 1: return "from-slate-300 to-slate-400 shadow-slate-400/40";
-      case 2: return "from-orange-400 to-orange-700 shadow-orange-700/40";
+      case 2: return "from-slate-400 to-slate-700 shadow-slate-700/40";
       default: return "from-slate-700 to-slate-900 shadow-slate-900/40";
     }
   };
@@ -120,11 +120,11 @@ const Leaderboard = ({
       </div>
 
       {winner && (
-        <div className="mb-10 p-1 bg-linear-to-r from-yellow-400 via-orange-500 to-yellow-400 rounded-3xl animate-gradient-x">
+        <div className="mb-10 p-1 bg-linear-to-r from-yellow-400 via-slate-500 to-yellow-400 rounded-3xl animate-gradient-x">
           <div className="bg-white/95 backdrop-blur-md p-6 rounded-[calc(1.5rem-1px)] text-center">
              <div className="text-4xl mb-4 animate-bounce-subtle">👑</div>
              <h3 className="text-2xl font-black text-slate-900 tracking-tighter uppercase">Grand Winner</h3>
-             <p className="font-black text-orange-600 text-xl mt-1 tracking-tight">
+             <p className="font-black text-slate-600 text-xl mt-1 tracking-tight">
                {winner.name}
              </p>
           </div>
@@ -190,7 +190,7 @@ const Leaderboard = ({
                 </div>
 
                 <div className="text-right shrink-0">
-                  <div className={`text-2xl font-black tracking-tighter leading-none ${isWinner ? "text-orange-600" : isEliminated ? "text-slate-400" : "text-slate-900"}`}>
+                  <div className={`text-2xl font-black tracking-tighter leading-none ${isWinner ? "text-slate-600" : isEliminated ? "text-slate-400" : "text-slate-900"}`}>
                     {player.totalScore}
                   </div>
                   <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-1">

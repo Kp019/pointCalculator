@@ -38,14 +38,14 @@ const ProfilePage = () => {
   };
 
   const colors = [
-    "from-primary-400 to-accent-400",
+    "from-primary-400 to-orange-500",
     "from-emerald-400 to-teal-400",
-    "from-orange-400 to-amber-400",
+    "from-slate-400 to-amber-400",
     "from-pink-400 to-rose-400",
     "from-violet-400 to-purple-400",
     "from-slate-400 to-slate-600",
     "from-cyan-400 to-blue-400",
-    "from-red-400 to-orange-400",
+    "from-red-400 to-slate-400",
   ];
 
   return (

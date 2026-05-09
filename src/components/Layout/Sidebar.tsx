@@ -144,7 +144,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                   className={({ isActive }) =>
                     `flex items-center gap-4 px-6 py-4 rounded-2xl font-black transition-all duration-500 group ${
                       isActive
-                        ? "bg-linear-to-r from-primary-600 to-accent-600 text-white"
+                        ? "bg-linear-to-r from-primary-500 to-orange-600 text-white"
                         : "text-slate-400 hover:text-slate-900 hover:bg-white border border-transparent hover:border-slate-100"
                     }`
                   }

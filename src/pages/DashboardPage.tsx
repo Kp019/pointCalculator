@@ -85,7 +85,7 @@ const DashboardPage = () => {
         {/* New Game Card */}
         <div
           onClick={() => navigate("/app/new")}
-          className={`bg-linear-to-br from-primary-500 via-primary-600 to-accent-600 rounded-[2.5rem] p-10 text-white cursor-pointer hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden ${!gameStarted ? 'md:col-span-2' : ''}`}
+          className={`bg-linear-to-br from-primary-500 via-primary-600 to-orange-600 rounded-[2.5rem] p-10 text-white cursor-pointer hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden ${!gameStarted ? 'md:col-span-2' : ''}`}
         >
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
 
