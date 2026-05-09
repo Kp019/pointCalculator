@@ -96,7 +96,7 @@ const EditGameModal = ({
           </button>
           <button
             onClick={handleSave}
-            className="px-8 py-3 bg-slate-900 text-white font-bold rounded-xl shadow-lg hover:bg-slate-800 hover:scale-105 transition-all"
+            className="px-8 py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all"
           >
             Save Changes
           </button>

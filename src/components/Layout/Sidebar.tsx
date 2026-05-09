@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store";
 import { showModal } from "../../store/slices/uiSlice";
 
@@ -11,6 +11,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const user = useAppSelector((state) => state.auth.user);
   const gameStarted = useAppSelector((state) => state.game.gameStarted);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(
@@ -26,24 +27,44 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   };
 
   const navItems = [
-    { to: "/", label: "Dashboard", icon: "🏠" },
-    { to: "/new", label: "New Game", icon: "➕" },
-    { to: "/history", label: "History", icon: "📜" },
-    { to: "/rules", label: "Rules", icon: "⚙️" },
-    { to: "/profile", label: "Profile", icon: "👤" },
+    { to: "/app", label: "Dashboard", icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    )},
+    { to: "/app/new", label: "New Session", icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+      </svg>
+    )},
+    { to: "/app/history", label: "Game History", icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    )},
+    { to: "/app/rules", label: "Custom Rules", icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+      </svg>
+    )},
+    { to: "/app/profile", label: "My Profile", icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    )},
   ];
 
   return (
     <>
       <aside
-        className={`fixed lg:sticky top-0 left-0 z-50 w-72 bg-white border-r border-slate-100 flex flex-col h-screen transition-transform duration-300 ease-in-out ${
+        className={`fixed lg:sticky top-0 left-0 z-50 w-80 bg-white/80 backdrop-blur-3xl border-r border-slate-100 flex flex-col h-screen transition-transform duration-500 var(--ease-out-expo) ${
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
         {/* Brand */}
-        <div className="p-8 border-b border-slate-50 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-linear-to-br from-primary-600 to-accent-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/20 rotate-3 group-hover:rotate-6 transition-transform">
+        <div className="p-10 pb-12 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-4 group cursor-pointer" onClick={() => navigate("/")}>
+            <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
               <svg
                 className="w-6 h-6 text-white"
                 fill="none"
@@ -53,20 +74,20 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                  strokeWidth={3}
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
                 />
               </svg>
             </div>
-            <span className="text-xl font-black text-slate-900 tracking-tight">
-              Point<span className="text-primary-600">Calc</span>
+            <span className="text-2xl font-black text-slate-900 tracking-tighter">
+              Point<span className="gradient-text">Calc</span>
             </span>
           </div>
 
           {/* Mobile Close Button */}
           <button
             onClick={onClose}
-            className="lg:hidden p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors"
+            className="lg:hidden p-3 text-slate-400 hover:bg-slate-50 rounded-xl transition-all active:scale-90"
           >
             <svg
               className="w-6 h-6"
@@ -77,7 +98,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={3}
                 d="M6 18L18 6M6 6l12 12"
               />
             </svg>
@@ -85,66 +106,77 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-6 space-y-2 overflow-y-auto custom-scrollbar">
           {gameStarted && (
             <NavLink
-              to="/game"
+              to="/app/game"
               onClick={onClose}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all relative group ${
+                `flex items-center gap-4 px-6 py-5 rounded-2xl font-black transition-all relative group overflow-hidden ${
                   isActive
-                    ? "bg-slate-900 text-white shadow-xl shadow-slate-900/20"
-                    : "text-green-600 hover:bg-green-50"
+                    ? "bg-slate-900 text-white"
+                    : "text-green-600 hover:bg-green-50/50 border border-green-100"
                 }`
               }
             >
-              <span className="text-xl group-hover:scale-110 transition-transform">
-                🎮
-              </span>
-              Active Game
-              <span className="absolute right-4 w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <div className="absolute inset-0 bg-green-500/5 group-hover:bg-green-500/10 transition-colors pointer-events-none" />
+              <div className="relative z-10 flex items-center gap-4 w-full">
+                <span className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                  🎮
+                </span>
+                <span className="flex-1">Live Game</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+              </div>
             </NavLink>
           )}
 
-          <div className="py-2">
-            <p className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">
-              Menu
+          <div className="pt-6 pb-2">
+            <p className="px-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6">
+              Main Menu
             </p>
-            {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                onClick={onClose}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${
-                    isActive
-                      ? "bg-linear-to-r from-primary-600 to-accent-600 text-white shadow-xl shadow-primary-500/20"
-                      : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-                  }`
-                }
-              >
-                <span className="text-xl">{item.icon}</span>
-                {item.label}
-              </NavLink>
-            ))}
+            <div className="space-y-2">
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.to === "/app"}
+                  onClick={onClose}
+                  className={({ isActive }) =>
+                    `flex items-center gap-4 px-6 py-4 rounded-2xl font-black transition-all duration-500 group ${
+                      isActive
+                        ? "bg-linear-to-r from-primary-600 to-accent-600 text-white"
+                        : "text-slate-400 hover:text-slate-900 hover:bg-white border border-transparent hover:border-slate-100"
+                    }`
+                  }
+                >
+                  <div className={`transition-transform duration-500 group-hover:scale-110`}>
+                    {item.icon}
+                  </div>
+                  <span className="text-sm tracking-tight">{item.label}</span>
+                </NavLink>
+              ))}
+            </div>
           </div>
         </nav>
 
         {/* User Info & Footer */}
-        <div className="p-4 border-t border-slate-50 bg-slate-50/50">
-          <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3 mb-4">
+        <div className="p-6 pb-10 shrink-0">
+          <div className="glass-card p-4 bg-white/60 border-white/80 flex items-center gap-4 mb-6 hover:bg-white transition-all duration-500 cursor-pointer" onClick={() => navigate("/app/profile")}>
             <div
-              className={`w-10 h-10 rounded-full bg-linear-to-br ${user?.avatarColor || "from-slate-400 to-slate-500"} flex items-center justify-center text-white font-black text-xs shadow-md`}
+              className={`w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white font-black text-sm group overflow-hidden relative`}
             >
-              {user?.username?.charAt(0).toUpperCase() ||
-                user?.email.charAt(0).toUpperCase()}
+              <div className="absolute inset-0 bg-primary-500/20 animate-pulse-slow" />
+              <span className="relative z-10">
+                {user?.username?.charAt(0).toUpperCase() ||
+                  user?.email.charAt(0).toUpperCase()}
+              </span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-black text-slate-900 truncate">
-                {user?.username || user?.email}
+              <p className="text-sm font-black text-slate-900 truncate tracking-tight">
+                {user?.username || user?.email?.split('@')[0]}
               </p>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
-                Player
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">
+                Pro Account
               </p>
             </div>
           </div>
@@ -154,44 +186,39 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               handleLogout();
               onClose();
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-xl font-bold transition-all"
+            className="w-full flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-2xl font-black transition-all group"
           >
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
+              className="w-5 h-5 group-hover:-translate-x-1 transition-transform"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="icon icon-tabler icons-tabler-outline icon-tabler-logout"
+              viewBox="0 0 24 24"
             >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-              <path d="M9 12h12l-3 -3" />
-              <path d="M18 15l3 -3" />
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
-            Logout
+            <span className="text-sm">Sign Out</span>
           </button>
-          <p className="text-sm text-start mt-5">
-            Made with ❤️ by{" "}
-            <a
-              className="font-bold"
-              href="https://github.com/kp019"
-              target="_blank"
-            >
-              KP
-            </a>
-          </p>
+          
+          <div className="mt-8 px-6 flex items-center justify-between opacity-40 hover:opacity-100 transition-opacity">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              v2.0.4
+            </p>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              By KP
+            </p>
+          </div>
         </div>
       </aside>
 
       {/* Mobile Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 lg:hidden animate-fade-in"
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-40 lg:hidden animate-fade-in"
           onClick={onClose}
         />
       )}

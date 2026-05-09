@@ -56,7 +56,7 @@ const RulesPage = () => {
         <h1 className="text-3xl font-black text-slate-900">Rule Presets</h1>
         <button
           onClick={handleCreateNew}
-          className="px-6 py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/10 flex items-center gap-2"
+          className="px-6 py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-sm shadow-slate-900/10 flex items-center gap-2"
         >
           <svg
             className="w-5 h-5"
@@ -104,7 +104,7 @@ const RulesPage = () => {
           {savedRules.map((rule) => (
             <div
               key={rule.id}
-              className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all group"
+              className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm transition-all group"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-500 group-hover:scale-110 transition-transform">

@@ -81,8 +81,7 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
             {playerNames.map((name, index) => (
               <div
                 key={index}
-                className="flex gap-3 items-center animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="flex gap-3 items-center"
               >
                 <div className="flex-1 relative">
                   <div className="absolute inset-y-0 left-0 md:pl-4 pl-2 flex items-center pointer-events-none">

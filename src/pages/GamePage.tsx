@@ -60,7 +60,7 @@ const GamePage = () => {
 
   const handleSaveGame = async () => {
     const gameData: SavedGame = {
-      id: game.id || "", // ID is optional for creation
+      id: game.id || "",
       name: `Game ${new Date().toLocaleDateString()}`,
       config: config,
       players: players,
@@ -70,19 +70,16 @@ const GamePage = () => {
     };
 
     if (game.id) {
-      // Update existing game
       await dispatch(updateHistoryGameAsync(gameData));
       dispatch(
-        addToast({ message: "Game Updated Successfully!", type: "success" }),
+        addToast({ message: "Session Synced Successfully", type: "success" }),
       );
     } else {
-      // Save new game
       const resultAction = await dispatch(saveGameAsync(gameData));
       if (saveGameAsync.fulfilled.match(resultAction)) {
-        // Update local game with the ID from backend
         dispatch(setGameId(resultAction.payload.id));
         dispatch(
-          addToast({ message: "Game Saved Successfully!", type: "success" }),
+          addToast({ message: "Session Archived", type: "success" }),
         );
       }
     }
@@ -91,10 +88,10 @@ const GamePage = () => {
   const handleResetGame = () => {
     dispatch(
       showModal({
-        title: "New Game with Same Players?",
+        title: "Reset Session?",
         message:
-          "This will clear all scores and rounds while keeping your current players. Are you ready to start a fresh game?",
-        confirmLabel: "Start New Game",
+          "This will clear all recorded rounds while keeping your current player lineup. Start fresh?",
+        confirmLabel: "Restart Game",
         onConfirm: "game/resetGame",
         type: "danger",
       }),
@@ -104,9 +101,9 @@ const GamePage = () => {
   const handleExitGame = () => {
     dispatch(
       showModal({
-        title: "Exit Game?",
+        title: "Leave Session?",
         message:
-          "Are you sure you want to exit? All unsaved progress will be lost and you will return to the setup screen.",
+          "Unsaved progress may be lost. Are you sure you want to return to the dashboard?",
         confirmLabel: "Exit Game",
         onConfirm: "game/exitGame",
         type: "danger",
@@ -115,13 +112,14 @@ const GamePage = () => {
   };
 
   return (
-    <div className="space-y-8 w-full">
-      {/* Game Controls */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 card animate-slide-down">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-xl bg-linear-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg shadow-primary-500/20">
+    <div className="space-y-10 w-full pb-20 relative z-10 animate-fade-in">
+      {/* Game Header / Controls */}
+      <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-8 glass-card p-8 bg-white/60 border-white/80 animate-slide-down shadow-sm">
+        <div className="flex items-center gap-6">
+          <div className="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center shadow-md relative overflow-hidden group">
+            <div className="absolute inset-0 bg-primary-500/20 animate-pulse" />
             <svg
-              className="w-7 h-7 text-white"
+              className="w-8 h-8 text-white relative z-10 group-hover:scale-110 transition-transform"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -129,35 +127,27 @@ const GamePage = () => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={2.5}
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
           </div>
           <div>
-            <h2 className="text-3xl font-bold bg-linear-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-              Round {currentRound}
+             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1">Active Session</p>
+            <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
+              Round <span className="gradient-text">{currentRound}</span>
             </h2>
-            <p className="text-slate-500 flex items-center gap-2 mt-1 font-medium">
-              <svg
-                className="w-4 h-4 text-primary-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-              </svg>
-              {players.length} {players.length === 1 ? "player" : "players"}
-            </p>
           </div>
         </div>
-        <div className="flex gap-2 w-full sm:w-auto">
+
+        <div className="flex flex-wrap gap-4 w-full xl:w-auto">
           <button
             onClick={handleSaveGame}
-            className="btn-primary group flex-1 sm:flex-none"
+            className="btn-primary group flex-1 xl:flex-none py-4! px-8! text-sm shadow-sm"
           >
-            <span className="flex items-center justify-center gap-2 text-white">
+            <div className="flex items-center justify-center gap-3">
               <svg
-                className="w-5 h-5 text-white"
+                className="w-5 h-5 text-white/80 group-hover:text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -165,21 +155,20 @@ const GamePage = () => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={3}
                   d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
                 />
               </svg>
-              Save Game
-            </span>
+              <span>Sync Game</span>
+            </div>
           </button>
           <button
             onClick={handleResetGame}
-            className="btn-secondary group flex-1 sm:flex-none"
-            title="Start new game with same players"
+            className="btn-secondary group flex-1 xl:flex-none py-4! px-8! text-sm border-white shadow-sm"
           >
-            <span className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-3">
               <svg
-                className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500"
+                className="w-5 h-5 group-hover:rotate-180 transition-transform duration-700"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -187,16 +176,16 @@ const GamePage = () => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={2.5}
                   d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                 />
               </svg>
-              New Game
-            </span>
+              <span>Restart</span>
+            </div>
           </button>
           <button
             onClick={handleExitGame}
-            className="p-3 text-slate-400 hover:text-rose-500 transition-colors"
+            className="p-4 bg-white border border-slate-100 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all shadow-sm active:scale-90"
             title="Exit Game"
           >
             <svg
@@ -208,7 +197,7 @@ const GamePage = () => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={2.5}
                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
               />
             </svg>
@@ -216,9 +205,9 @@ const GamePage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Score Input */}
-        <div className="lg:col-span-2 animate-slide-up">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        {/* Score Input Panel */}
+        <div className="lg:col-span-7 animate-slide-up">
           <GameBoard
             players={players}
             currentRound={currentRound}
@@ -228,8 +217,8 @@ const GamePage = () => {
           />
         </div>
 
-        {/* Leaderboard */}
-        <div className="animate-slide-up" style={{ animationDelay: "0.1s" }}>
+        {/* Leaderboard Panel */}
+        <div className="lg:col-span-5 animate-slide-up" style={{ animationDelay: "0.15s" }}>
           <Leaderboard
             players={sortedPlayers}
             rounds={rounds}

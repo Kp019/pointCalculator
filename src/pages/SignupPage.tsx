@@ -3,6 +3,17 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store";
 import { signupUser, clearError } from "../store/slices/authSlice";
 
+const getFriendlyError = (err: string | null) => {
+  if (!err) return null;
+  if (err.includes("OperationalError") || err.includes("SQL") || err.includes("psycopg2") || err.includes("sqlalchemy")) {
+    return "The server is currently unavailable. Please try again later.";
+  }
+  if (err.includes("ECONNREFUSED") || err.includes("Network Error")) {
+    return "Network error. Please check your connection.";
+  }
+  return err;
+};
+
 const SignupPage = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -17,7 +28,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/app");
     }
     return () => {
       dispatch(clearError());
@@ -31,7 +42,7 @@ const SignupPage = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match"); // Should use toast, but sticking to basics for now
+      alert("Passwords do not match");
       return;
     }
 
@@ -45,12 +56,23 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] bg-[length:24px_24px]">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8 animate-fade-in">
-          <div className="w-16 h-16 bg-white/50 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-4 border border-slate-200 shadow-sm">
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+      {/* Dynamic Background Glows */}
+      <div className="fixed inset-0 pointer-events-none -z-10">
+        <div 
+          className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-200/20 rounded-full blur-[140px] animate-pulse-slow"
+        />
+        <div 
+          className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent-200/20 rounded-full blur-[140px] animate-pulse-slow"
+          style={{ animationDelay: '-1s' }}
+        />
+      </div>
+
+      <div className="w-full max-w-md relative z-10">
+        <div className="text-center mb-10 animate-slide-down">
+          <Link to="/" className="w-20 h-20 bg-slate-900 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-md hover:rotate-12 transition-transform duration-500 group">
             <svg
-              className="w-8 h-8 text-primary-500"
+              className="w-10 h-10 text-white group-hover:scale-110 transition-transform"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -58,29 +80,29 @@ const SignupPage = () => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
-                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                strokeWidth={2.5}
+                d="M13 10V3L4 14h7v7l9-11h-7z"
               />
             </svg>
-          </div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight">
-            Create Account
+          </Link>
+          <h1 className="text-4xl font-black text-slate-900 tracking-tighter">
+            Join the <span className="gradient-text">Elite.</span>
           </h1>
-          <p className="text-slate-500 font-medium mt-1">
-            Join PointCalculator today
+          <p className="text-slate-400 font-bold uppercase text-[10px] tracking-[0.3em] mt-3">
+            Setup your pro account
           </p>
         </div>
 
-        <div className="bg-white rounded-[2.5rem] p-10 shadow-2xl shadow-slate-200/60 border border-slate-100 animate-scale-up">
-          <form onSubmit={handleSignup} className="space-y-5">
+        <div className="glass-card p-10 bg-white/60 border-white/80 animate-scale-in shadow-sm">
+          <form onSubmit={handleSignup} className="space-y-6">
             {error && (
-              <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm font-medium text-center">
-                {error}
+              <div className="p-5 bg-red-50 text-red-600 rounded-2xl text-sm font-bold text-center border border-red-100 animate-shake break-words">
+                {getFriendlyError(error)}
               </div>
             )}
 
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2 ml-1">
+            <div className="space-y-2">
+              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
                 Username
               </label>
               <input
@@ -88,14 +110,14 @@ const SignupPage = () => {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="w-full px-5 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-primary-500 focus:bg-white transition-all font-medium text-slate-900 placeholder:text-slate-300 shadow-inner"
-                placeholder="Username"
+                className="input-field"
+                placeholder="GameMaster"
                 required
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2 ml-1">
+            <div className="space-y-2">
+              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
                 Email Address
               </label>
               <input
@@ -103,15 +125,15 @@ const SignupPage = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-5 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-primary-500 focus:bg-white transition-all font-medium text-slate-900 placeholder:text-slate-300 shadow-inner"
+                className="input-field"
                 placeholder="you@example.com"
                 required
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2 ml-1">
+              <div className="space-y-2">
+                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
                   Password
                 </label>
                 <input
@@ -119,13 +141,13 @@ const SignupPage = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-5 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-primary-500 focus:bg-white transition-all font-medium text-slate-900 placeholder:text-slate-300 shadow-inner"
+                  className="input-field px-4!"
                   placeholder="••••••••"
                   required
                 />
               </div>
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2 ml-1">
+              <div className="space-y-2">
+                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
                   Confirm
                 </label>
                 <input
@@ -133,7 +155,7 @@ const SignupPage = () => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="w-full px-5 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-primary-500 focus:bg-white transition-all font-medium text-slate-900 placeholder:text-slate-300 shadow-inner"
+                  className="input-field px-4!"
                   placeholder="••••••••"
                   required
                 />
@@ -143,22 +165,22 @@ const SignupPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 mt-2 bg-linear-to-r from-primary-600 to-accent-600 text-white text-lg font-black rounded-2xl shadow-xl shadow-primary-500/30 hover:shadow-primary-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 group disabled:opacity-70 disabled:cursor-not-allowed"
+              className="btn-primary w-full py-5 mt-4 text-xl shadow-sm group disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
               ) : (
-                "Sign Up"
+                "Create Account"
               )}
             </button>
           </form>
 
-          <div className="mt-8 text-center">
+          <div className="mt-10 text-center">
             <p className="text-slate-500 font-medium">
-              Already have an account?{" "}
+              Already a member?{" "}
               <Link
                 to="/login"
-                className="text-primary-600 font-bold hover:text-primary-700 transition-colors"
+                className="text-primary-600 font-black hover:text-primary-700 transition-colors"
               >
                 Sign In
               </Link>

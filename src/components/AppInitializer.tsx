@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
 import { fetchRules } from "../store/slices/rulesSlice";
 import { fetchProfile } from "../store/slices/authSlice";
+import ToastContainer from "./UI/ToastContainer";
+import ConfirmationModal from "./UI/ConfirmationModal";
 
 interface AppInitializerProps {
   children: React.ReactNode;
@@ -27,7 +29,13 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ children }) => {
     }
   }, [dispatch, user?.id]);
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <ToastContainer />
+      <ConfirmationModal />
+    </>
+  );
 };
 
 export default AppInitializer;

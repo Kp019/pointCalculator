@@ -18,7 +18,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
       />
 
       {/* Content */}
-      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-scale-in">
+      <div className="relative w-full max-w-md bg-white rounded-3xl overflow-hidden animate-scale-in border border-slate-100">
         {children}
       </div>
     </div>

@@ -39,17 +39,13 @@ const Leaderboard = ({
     isPlayerWinner: boolean,
     isEliminated: boolean,
   ) => {
-    if (isEliminated) return "from-slate-200 to-slate-200";
-    if (isPlayerWinner) return "from-yellow-400 to-orange-500 animate-pulse";
+    if (isEliminated) return "from-slate-200 to-slate-300";
+    if (isPlayerWinner) return "from-yellow-400 to-orange-500 shadow-yellow-500/50";
     switch (rank) {
-      case 0:
-        return "from-yellow-400 to-yellow-600";
-      case 1:
-        return "from-slate-300 to-slate-500";
-      case 2:
-        return "from-amber-600 to-amber-800";
-      default:
-        return "from-slate-600 to-slate-700";
+      case 0: return "from-yellow-400 to-amber-600 shadow-yellow-500/40";
+      case 1: return "from-slate-300 to-slate-400 shadow-slate-400/40";
+      case 2: return "from-orange-400 to-orange-700 shadow-orange-700/40";
+      default: return "from-slate-700 to-slate-900 shadow-slate-900/40";
     }
   };
 
@@ -61,14 +57,10 @@ const Leaderboard = ({
     if (isEliminated) return "💀";
     if (isPlayerWinner) return "🏆";
     switch (rank) {
-      case 0:
-        return "🥇";
-      case 1:
-        return "🥈";
-      case 2:
-        return "🥉";
-      default:
-        return `${rank + 1}`;
+      case 0: return "🥇";
+      case 1: return "🥈";
+      case 2: return "🥉";
+      default: return `${rank + 1}`;
     }
   };
 
@@ -100,134 +92,109 @@ const Leaderboard = ({
   };
 
   return (
-    <div className="card sticky top-8">
-      <div className="flex flex-col mb-6">
+    <div className="glass-card bg-white/60 border-white/80 p-8 lg:sticky lg:top-8 overflow-hidden group/board">
+      {/* Decorative Glow */}
+      <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary-500/10 rounded-full blur-3xl group-hover/board:scale-150 transition-transform duration-1000" />
+      
+      <div className="relative z-10 flex flex-col mb-10">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Leaderboard</h2>
-          <div className="flex gap-2">
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight">Leaderboard</h2>
+          <div className="flex flex-wrap gap-2 justify-end">
             {config.winMetric !== "points" && (
-              <span className="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold border border-slate-200">
+              <span className="px-3 py-1 bg-slate-900 text-white rounded-full text-[9px] font-black uppercase tracking-widest">
                 {rounds.length}/{config.targetRounds} Rounds
               </span>
             )}
             {config.winMetric !== "rounds" && (
-              <span className="px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-bold border border-primary-100">
-                Target: {config.targetPoints} pts
+              <span className="px-3 py-1 bg-primary-500 text-white rounded-full text-[9px] font-black uppercase tracking-widest">
+                Target: {config.targetPoints}
               </span>
             )}
           </div>
         </div>
-        <div className="mt-2 text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              fillRule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Condition: {config.winCondition} points win
-          {` (${config.gameMode})`}
+        <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          {config.winCondition} points win
+          <span className="opacity-40 ml-1">({config.gameMode})</span>
         </div>
       </div>
 
       {winner && (
-        <div className="mb-6 p-4 bg-linear-to-r from-yellow-400/20 to-orange-500/20 border-2 border-yellow-400 rounded-2xl animate-bounce-subtle text-center">
-          <div className="flex items-center justify-center gap-4">
-            <span className="text-4xl">👑</span>
-            <div>
-              <h3 className="text-xl font-black text-slate-900 uppercase">
-                Game Over!
-              </h3>
-              <p className="font-bold text-orange-600">
-                {winner.name} is the Winner!
-              </p>
-            </div>
+        <div className="mb-10 p-1 bg-linear-to-r from-yellow-400 via-orange-500 to-yellow-400 rounded-3xl animate-gradient-x">
+          <div className="bg-white/95 backdrop-blur-md p-6 rounded-[calc(1.5rem-1px)] text-center">
+             <div className="text-4xl mb-4 animate-bounce-subtle">👑</div>
+             <h3 className="text-2xl font-black text-slate-900 tracking-tighter uppercase">Grand Winner</h3>
+             <p className="font-black text-orange-600 text-xl mt-1 tracking-tight">
+               {winner.name}
+             </p>
           </div>
         </div>
       )}
 
       {players.length === 0 ? (
-        <div className="text-center py-8 text-slate-400">
-          <svg
-            className="w-16 h-16 mx-auto mb-4 opacity-50"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-            />
-          </svg>
-          <p>Start playing to see rankings!</p>
+        <div className="text-center py-12">
+          <div className="w-20 h-20 bg-slate-100 rounded-3xl flex items-center justify-center mx-auto mb-6 text-slate-300">
+             <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <p className="text-slate-400 font-bold uppercase text-[10px] tracking-[0.2em]">Awaiting first round...</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-4 relative z-10">
           {players.map((player, index) => {
             const isWinner = winner?.id === player.id;
             const isEliminated = eliminatedPlayerIds.has(player.id);
             return (
               <div
                 key={player.id}
-                className={`group flex items-center gap-2 p-2 rounded-2xl border transition-all duration-300 animate-slide-up hover:scale-[1.02] ${
+                className={`group/item flex items-center gap-4 p-4 rounded-3xl border transition-all duration-500 ${
                   isWinner
-                    ? "bg-yellow-50 border-yellow-300 shadow-lg shadow-yellow-200"
+                    ? "bg-yellow-50/50 border-yellow-200"
                     : isEliminated
-                      ? "bg-slate-50 border-slate-200 grayscale-[0.5] opacity-80"
-                      : "bg-white border-slate-200 hover:border-primary-300 hover:shadow-xl hover:shadow-primary-500/10"
+                      ? "bg-slate-50/50 border-slate-100 opacity-60 grayscale"
+                      : "bg-white/80 border-white hover:bg-white"
                 }`}
-                style={{ animationDelay: `${index * 0.05}s` }}
               >
                 <div
-                  className={`relative w-14 h-14 rounded-full bg-gradient-to-br ${getRankColor(index, isWinner, isEliminated)} flex items-center justify-center font-bold text-xl shadow-lg ring-2 ring-white ring-offset-2 ring-offset-slate-100 transition-colors`}
+                  className={`shrink-0 w-12 h-12 rounded-2xl bg-linear-to-br ${getRankColor(index, isWinner, isEliminated)} flex items-center justify-center font-black text-lg text-white transition-transform duration-500 group-hover/item:rotate-12`}
                 >
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/5 to-transparent" />
-                  <span className="relative z-10 text-white">
-                    {getRankEmoji(index, isWinner, isEliminated)}
-                  </span>
+                  {getRankEmoji(index, isWinner, isEliminated)}
                 </div>
+                
                 <div className="flex-1 min-w-0">
-                  <h3
-                    className={`font-bold text-xl truncate mb-1 ${isEliminated ? "text-slate-400 line-through decoration-2" : "text-slate-900"}`}
-                  >
+                  <h3 className={`font-black text-lg tracking-tighter truncate ${isEliminated ? "text-slate-400 line-through" : "text-slate-900 group-hover/item:text-primary-600 transition-colors"}`}>
                     {player.name}
                   </h3>
                   {player.scores.length > 0 && (
-                    <div className="flex gap-1.5 mt-2 overflow-x-auto scrollbar-hide">
+                    <div className="flex gap-1.5 mt-2 overflow-x-auto custom-scrollbar pb-1">
                       {player.scores.map((score, idx) => (
-                        <span
+                        <button
                           key={idx}
-                          onClick={() =>
-                            handleScoreClick(player.id, player.name, idx, score)
-                          }
-                          className={`text-xs px-2.5 py-1 rounded-md font-bold cursor-pointer hover:ring-2 hover:ring-primary-500 transition-all ${
+                          onClick={() => handleScoreClick(player.id, player.name, idx, score)}
+                          className={`text-[10px] font-black px-2.5 py-1 rounded-lg transition-all border shrink-0 ${
                             isEliminated
-                              ? "bg-slate-100 text-slate-400"
+                              ? "bg-slate-100 text-slate-300 border-slate-100"
                               : score > 0
-                                ? "bg-green-50 text-green-700 border border-green-100"
+                                ? "bg-green-50 text-green-700 border-green-100 hover:bg-green-100"
                                 : score < 0
-                                  ? "bg-red-50 text-red-700 border border-red-100"
-                                  : "bg-slate-100 text-slate-500 border border-slate-200"
+                                  ? "bg-red-50 text-red-700 border-red-100 hover:bg-red-100"
+                                  : "bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200"
                           }`}
-                          title={`Round ${idx + 1} - Click to edit`}
                         >
-                          {score > 0 ? "+" : ""}
-                          {score}
-                        </span>
+                          {score > 0 ? "+" : ""}{score}
+                        </button>
                       ))}
                     </div>
                   )}
                 </div>
-                <div className="text-right">
-                  <div
-                    className={`text-3xl font-black ${isWinner ? "text-orange-600" : isEliminated ? "text-slate-400" : "gradient-text"}`}
-                  >
+
+                <div className="text-right shrink-0">
+                  <div className={`text-2xl font-black tracking-tighter leading-none ${isWinner ? "text-orange-600" : isEliminated ? "text-slate-400" : "text-slate-900"}`}>
                     {player.totalScore}
                   </div>
-                  <div className="text-xs text-slate-400 uppercase tracking-wider font-bold">
-                    points
+                  <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-1">
+                    PTS
                   </div>
                 </div>
               </div>
@@ -236,128 +203,65 @@ const Leaderboard = ({
         </div>
       )}
 
-      {/* Game Stats */}
+      {/* Stats Summary */}
       {rounds.length > 0 && (
-        <div className="mt-6 p-5 bg-linear-to-br from-primary-50 via-accent-50 to-primary-50 border border-primary-100 rounded-2xl shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <svg
-              className="w-5 h-5 text-primary-500"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-              <path
-                fillRule="evenodd"
-                d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <h3 className="text-sm font-bold text-primary-600 uppercase tracking-wider">
-              Game Stats
-            </h3>
-          </div>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
-              <span className="text-slate-400 text-xs uppercase tracking-wide block mb-1 font-bold">
-                Rounds Played
-              </span>
-              <div className="font-black text-2xl text-slate-900">
-                {rounds.length}
+        <div className="mt-10 pt-10 border-t border-slate-100 grid grid-cols-2 gap-4">
+           <div className="bg-slate-50/50 p-5 rounded-3xl border border-slate-100">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Pace</span>
+              <div className="text-2xl font-black text-slate-900">
+                {rounds.length} <span className="text-xs opacity-40">Rounds</span>
               </div>
-            </div>
-            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
-              <span className="text-slate-400 text-xs uppercase tracking-wide block mb-1 font-bold">
-                Total Players
-              </span>
-              <div className="font-black text-2xl text-slate-900">
-                {players.length}
+           </div>
+           <div className="bg-slate-50/50 p-5 rounded-3xl border border-slate-100">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">High Score</span>
+              <div className="text-2xl font-black gradient-text">
+                {Math.max(...players.map(p => p.totalScore), 0)}
               </div>
-            </div>
-            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
-              <span className="text-slate-400 text-xs uppercase tracking-wide block mb-1 font-bold">
-                {config.winCondition === "highest" ? "Highest" : "Lowest"} Score
-              </span>
-              <div className="font-black text-2xl gradient-text">
-                {players[0]?.totalScore || 0}
-              </div>
-            </div>
-            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
-              <span className="text-slate-400 text-xs uppercase tracking-wide block mb-1 font-bold">
-                Current Leader
-              </span>
-              <div className="font-bold text-lg text-primary-600 truncate">
-                {players[0]?.name || "-"}
-              </div>
-            </div>
-          </div>
+           </div>
         </div>
       )}
 
       {/* Edit Score Modal */}
       {editingScore && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-xl animate-fade-in">
           <div
-            className="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl animate-scale-up"
+            className="bg-white rounded-[2.5rem] p-10 w-full max-w-sm animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg
-                  className="w-8 h-8 text-primary-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                  />
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-slate-900 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900">Edit Points</h3>
-              <p className="text-slate-500 mt-1">
-                Updating {editingScore.playerName}&apos;s score for Round{" "}
-                {editingScore.roundIndex + 1}
+              <h3 className="text-3xl font-black text-slate-900 tracking-tighter">Edit Points</h3>
+              <p className="text-slate-400 font-bold text-sm mt-2">
+                Correcting {editingScore.playerName}&apos;s Round {editingScore.roundIndex + 1}
               </p>
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2 ml-1">
-                  New Score
-                </label>
+            <div className="space-y-6">
+              <div className="relative">
                 <input
                   type="number"
                   autoFocus
                   value={newScoreValue}
                   onChange={(e) => setNewScoreValue(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleUpdate()}
-                  className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-primary-500 focus:ring-0 transition-all text-xl font-bold text-center"
+                  className="w-full px-8 py-6 bg-slate-50 border-2 border-slate-100 rounded-3xl focus:border-primary-500 focus:ring-0 focus:bg-white transition-all text-3xl font-black text-center"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3 pt-2">
-                <button
-                  onClick={handleUpdate}
-                  className="btn-primary py-4 text-center justify-center"
-                >
-                  Save Changes
-                </button>
-                <button
-                  onClick={() => setEditingScore(null)}
-                  className="btn-secondary py-4 text-center justify-center border-slate-200"
-                >
-                  Cancel
-                </button>
+              <div className="grid grid-cols-2 gap-4">
+                <button onClick={handleUpdate} className="btn-primary py-5! text-sm shadow-xl">Update</button>
+                <button onClick={() => setEditingScore(null)} className="btn-secondary py-5! text-sm border-slate-200 shadow-xl">Cancel</button>
               </div>
 
               <button
                 onClick={handleDelete}
-                className="w-full py-3 text-red-500 font-bold hover:bg-red-50 rounded-xl transition-colors"
+                className="w-full py-4 text-slate-400 hover:text-red-500 font-black text-[10px] uppercase tracking-widest transition-colors"
               >
-                Reset to 0
+                Reset score to zero
               </button>
             </div>
           </div>

@@ -70,7 +70,7 @@ const RuleConfigModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl animate-scale-up border border-slate-200 flex flex-col max-h-[90vh]">
+      <div className="bg-white rounded-3xl w-full max-w-lg animate-scale-up border border-slate-200 flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-3xl">
           <h2 className="text-2xl font-black text-slate-900">
@@ -133,7 +133,7 @@ const RuleConfigModal = ({
                   disabled={isViewOnly}
                   className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${
                     winMetric === metric
-                      ? "bg-primary-500 text-white border-primary-500 shadow-md"
+                      ? "bg-primary-500 text-white border-primary-500"
                       : "bg-white text-slate-600 border-slate-200"
                   } ${!isViewOnly && winMetric !== metric ? "hover:border-primary-300" : ""}`}
                 >
@@ -182,10 +182,10 @@ const RuleConfigModal = ({
               <button
                 onClick={() => !isViewOnly && setWinCondition("highest")}
                 disabled={isViewOnly}
-                className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${
+                className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all border ${
                   winCondition === "highest"
-                    ? "bg-white text-primary-600 shadow-sm"
-                    : "text-slate-500"
+                    ? "bg-white text-primary-600 border-slate-100"
+                    : "text-slate-500 border-transparent"
                 }`}
               >
                 Highest Wins
@@ -193,10 +193,10 @@ const RuleConfigModal = ({
               <button
                 onClick={() => !isViewOnly && setWinCondition("lowest")}
                 disabled={isViewOnly}
-                className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${
+                className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all border ${
                   winCondition === "lowest"
-                    ? "bg-white text-primary-600 shadow-sm"
-                    : "text-slate-500"
+                    ? "bg-white text-primary-600 border-slate-100"
+                    : "text-slate-500 border-transparent"
                 }`}
               >
                 Lowest Wins
@@ -267,7 +267,7 @@ const RuleConfigModal = ({
           {!isViewOnly && (
             <button
               onClick={handleSave}
-              className="px-8 py-3 bg-gradient-to-r from-primary-600 to-accent-600 text-white font-bold rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 hover:scale-105 transition-all"
+              className="px-8 py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all"
             >
               Save Config
             </button>

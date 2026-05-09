@@ -57,7 +57,7 @@ const ProfilePage = () => {
         <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
           <div className="flex items-center gap-6 mb-8">
             <div
-              className={`w-24 h-24 rounded-full bg-gradient-to-br ${user?.avatarColor} flex items-center justify-center text-3xl text-white font-bold shadow-lg ring-4 ring-white ring-offset-4 ring-offset-slate-50`}
+              className={`w-24 h-24 rounded-full bg-linear-to-br ${user?.avatarColor} flex items-center justify-center text-3xl text-white font-bold shadow-md ring-4 ring-white ring-offset-4 ring-offset-slate-50`}
             >
               {(name || user?.username || user?.email || "?")
                 .charAt(0)
@@ -101,7 +101,7 @@ const ProfilePage = () => {
                   <button
                     key={color}
                     onClick={() => handleUpdateColor(color)}
-                    className={`w-10 h-10 rounded-full bg-gradient-to-br ${color} transition-transform hover:scale-110 ring-2 ring-offset-2 ${user?.avatarColor === color ? "ring-slate-900 scale-110" : "ring-transparent"}`}
+                    className={`w-10 h-10 rounded-full bg-linear-to-br ${color} transition-transform hover:scale-110 ring-2 ring-offset-2 ${user?.avatarColor === color ? "ring-slate-900 scale-110" : "ring-transparent"}`}
                   />
                 ))}
               </div>

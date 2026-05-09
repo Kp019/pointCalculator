@@ -10,7 +10,7 @@ const SetupPage = () => {
 
   const handleStartGame = async (playerNames: string[], config: GameConfig) => {
     await dispatch(createGameAsync({ playerNames, config }));
-    navigate("/game");
+    navigate("/app/game");
   };
 
   return (
