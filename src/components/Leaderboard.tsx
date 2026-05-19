@@ -92,39 +92,34 @@ const Leaderboard = ({
   };
 
   return (
-    <div className="glass-card bg-white/60 border-white/80 p-8 lg:sticky lg:top-8 overflow-hidden group/board">
+    <div className="glass-card bg-white/60 border-white/80 p-4 sm:p-6 md:p-8 lg:sticky lg:top-8 overflow-hidden group/board">
       {/* Decorative Glow */}
-      <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary-500/10 rounded-full blur-3xl group-hover/board:scale-150 transition-transform duration-1000" />
+      <div className="absolute -top-16 sm:-top-20 md:-top-24 -right-16 sm:-right-20 md:-right-24 w-32 sm:w-40 md:w-48 h-32 sm:h-40 md:h-48 bg-primary-500/10 rounded-full blur-3xl group-hover/board:scale-150 transition-transform duration-1000" />
       
-      <div className="relative z-10 flex flex-col mb-10">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight">Leaderboard</h2>
-          <div className="flex flex-wrap gap-2 justify-end">
+      <div className="relative z-10 flex flex-col mb-6 sm:mb-8 md:mb-10">
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight">Leaderboard</h2>
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-end">
             {config.winMetric !== "points" && (
-              <span className="px-3 py-1 bg-slate-900 text-white rounded-full text-[9px] font-black uppercase tracking-widest">
+              <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-slate-900 text-white rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest whitespace-nowrap">
                 {rounds.length}/{config.targetRounds} Rounds
               </span>
             )}
             {config.winMetric !== "rounds" && (
-              <span className="px-3 py-1 bg-primary-500 text-white rounded-full text-[9px] font-black uppercase tracking-widest">
+              <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-primary-500 text-white rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest whitespace-nowrap">
                 Target: {config.targetPoints}
               </span>
             )}
           </div>
         </div>
-        <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
-          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-          {config.winCondition} points win
-          <span className="opacity-40 ml-1">({config.gameMode})</span>
-        </div>
       </div>
 
       {winner && (
-        <div className="mb-10 p-1 bg-linear-to-r from-yellow-400 via-slate-500 to-yellow-400 rounded-3xl animate-gradient-x">
-          <div className="bg-white/95 backdrop-blur-md p-6 rounded-[calc(1.5rem-1px)] text-center">
-             <div className="text-4xl mb-4 animate-bounce-subtle">👑</div>
-             <h3 className="text-2xl font-black text-slate-900 tracking-tighter uppercase">Grand Winner</h3>
-             <p className="font-black text-slate-600 text-xl mt-1 tracking-tight">
+        <div className="mb-6 sm:mb-8 md:mb-10 p-1 bg-linear-to-r from-yellow-400 via-slate-500 to-yellow-400 rounded-2xl sm:rounded-3xl animate-gradient-x">
+          <div className="bg-white/95 backdrop-blur-md p-4 sm:p-5 md:p-6 rounded-[calc(1rem-1px)] sm:rounded-[calc(1.5rem-1px)] text-center">
+             <div className="text-3xl sm:text-4xl mb-3 sm:mb-4 animate-bounce-subtle">👑</div>
+             <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter uppercase">Grand Winner</h3>
+             <p className="font-black text-slate-600 text-lg sm:text-xl mt-1 tracking-tight">
                {winner.name}
              </p>
           </div>
@@ -132,23 +127,23 @@ const Leaderboard = ({
       )}
 
       {players.length === 0 ? (
-        <div className="text-center py-12">
-          <div className="w-20 h-20 bg-slate-100 rounded-3xl flex items-center justify-center mx-auto mb-6 text-slate-300">
-             <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="text-center py-10 sm:py-12">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-100 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 text-slate-300">
+             <svg className="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <p className="text-slate-400 font-bold uppercase text-[10px] tracking-[0.2em]">Awaiting first round...</p>
+          <p className="text-slate-400 font-bold uppercase text-[9px] sm:text-[10px] tracking-[0.2em]">Awaiting first round...</p>
         </div>
       ) : (
-        <div className="space-y-4 relative z-10">
+        <div className="space-y-3 sm:space-y-4 relative z-10">
           {players.map((player, index) => {
             const isWinner = winner?.id === player.id;
             const isEliminated = eliminatedPlayerIds.has(player.id);
             return (
               <div
                 key={player.id}
-                className={`group/item flex items-center gap-4 p-4 rounded-3xl border transition-all duration-500 ${
+                className={`group/item flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl sm:rounded-3xl border transition-all duration-500 ${
                   isWinner
                     ? "bg-yellow-50/50 border-yellow-200"
                     : isEliminated
@@ -157,22 +152,22 @@ const Leaderboard = ({
                 }`}
               >
                 <div
-                  className={`shrink-0 w-12 h-12 rounded-2xl bg-linear-to-br ${getRankColor(index, isWinner, isEliminated)} flex items-center justify-center font-black text-lg text-white transition-transform duration-500 group-hover/item:rotate-12`}
+                  className={`shrink-0 w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl sm:rounded-2xl bg-linear-to-br ${getRankColor(index, isWinner, isEliminated)} flex items-center justify-center font-black text-sm sm:text-base md:text-lg text-white transition-transform duration-500 group-hover/item:rotate-12`}
                 >
                   {getRankEmoji(index, isWinner, isEliminated)}
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className={`font-black text-lg tracking-tighter truncate ${isEliminated ? "text-slate-400 line-through" : "text-slate-900 group-hover/item:text-primary-600 transition-colors"}`}>
+                  <h3 className={`font-black text-sm sm:text-base md:text-lg tracking-tighter truncate ${isEliminated ? "text-slate-400 line-through" : "text-slate-900 group-hover/item:text-primary-600 transition-colors"}`}>
                     {player.name}
                   </h3>
                   {player.scores.length > 0 && (
-                    <div className="flex gap-1.5 mt-2 overflow-x-auto custom-scrollbar pb-1">
+                    <div className="flex gap-1 sm:gap-1.5 mt-1.5 sm:mt-2 overflow-x-auto custom-scrollbar pb-1">
                       {player.scores.map((score, idx) => (
                         <button
                           key={idx}
                           onClick={() => handleScoreClick(player.id, player.name, idx, score)}
-                          className={`text-[10px] font-black px-2.5 py-1 rounded-lg transition-all border shrink-0 ${
+                          className={`text-[9px] sm:text-[10px] font-black px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md sm:rounded-lg transition-all border shrink-0 ${
                             isEliminated
                               ? "bg-slate-100 text-slate-300 border-slate-100"
                               : score > 0
@@ -190,10 +185,10 @@ const Leaderboard = ({
                 </div>
 
                 <div className="text-right shrink-0">
-                  <div className={`text-2xl font-black tracking-tighter leading-none ${isWinner ? "text-slate-600" : isEliminated ? "text-slate-400" : "text-slate-900"}`}>
+                  <div className={`text-lg sm:text-xl md:text-2xl font-black tracking-tighter leading-none ${isWinner ? "text-slate-600" : isEliminated ? "text-slate-400" : "text-slate-900"}`}>
                     {player.totalScore}
                   </div>
-                  <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-1">
+                  <div className="text-[8px] sm:text-[9px] font-black text-slate-400 uppercase tracking-widest mt-1">
                     PTS
                   </div>
                 </div>
@@ -206,18 +201,18 @@ const Leaderboard = ({
       {/* Stats Summary */}
       {rounds.length > 0 && (
         <div className="mt-10 pt-10 border-t border-slate-100 grid grid-cols-2 gap-4">
-           <div className="bg-slate-50/50 p-5 rounded-3xl border border-slate-100">
-              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Pace</span>
-              <div className="text-2xl font-black text-slate-900">
-                {rounds.length} <span className="text-xs opacity-40">Rounds</span>
-              </div>
-           </div>
-           <div className="bg-slate-50/50 p-5 rounded-3xl border border-slate-100">
-              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">High Score</span>
-              <div className="text-2xl font-black gradient-text">
-                {Math.max(...players.map(p => p.totalScore), 0)}
-              </div>
-           </div>
+            <div className="bg-slate-50/50 p-4 md:p-5 rounded-3xl border border-slate-100">
+               <span className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Pace</span>
+               <div className="text-xl md:text-2xl font-black text-slate-900">
+                 {rounds.length} <span className="text-[10px] opacity-40">Rounds</span>
+               </div>
+            </div>
+            <div className="bg-slate-50/50 p-4 md:p-5 rounded-3xl border border-slate-100">
+               <span className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">High Score</span>
+               <div className="text-xl md:text-2xl font-black gradient-text">
+                 {Math.max(...players.map(p => p.totalScore), 0)}
+               </div>
+            </div>
         </div>
       )}
 

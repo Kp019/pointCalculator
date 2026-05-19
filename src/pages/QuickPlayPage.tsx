@@ -97,54 +97,54 @@ const QuickPlayPage = () => {
   const selectedPlayer = players.find(p => p.id === selectedPlayerId);
 
   return (
-    <div className="h-screen bg-slate-50 flex flex-col overflow-hidden relative">
+    <div className="min-h-screen bg-slate-50 flex flex-col relative">
       {/* Dynamic Background Glows */}
       <div className="fixed inset-0 pointer-events-none -z-10">
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-primary-100/30 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-accent-100/30 rounded-full blur-[120px]" />
       </div>
 
-      <div className="max-w-4xl w-full mx-auto p-4 md:p-6 lg:p-12 flex-1 flex flex-col gap-8 md:gap-12 animate-fade-in min-h-0 relative z-10">
+      <div className="max-w-4xl w-full mx-auto p-4 md:p-6 flex-1 flex flex-col gap-6 md:gap-12 animate-fade-in min-h-0 relative z-10">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 shrink-0">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center justify-between w-full gap-6">
             <button
               onClick={() => navigate(-1)}
-              className="p-4 glass-card rounded-2xl text-slate-600 hover:text-slate-900 border-white shadow-xl"
+              className="p-3 md:p-4 glass-card rounded-2xl text-slate-600 hover:text-slate-900 border-white shadow-xl"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <div>
-              <h1 className="text-4xl font-black text-slate-900 tracking-tighter">
+              <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter">
                 Quick<span className="gradient-text">Play</span>
               </h1>
-              <p className="text-slate-500 font-bold uppercase text-[10px] tracking-[0.2em] mt-1">Live Tracking Mode</p>
+              <p className="text-slate-500 font-bold uppercase text-[9px] md:text-[10px] tracking-[0.2em] mt-1">Live Tracking Mode</p>
             </div>
           </div>
 
-          <div className="flex gap-4">
-            <button onClick={resetGame} className="btn-secondary text-sm px-6 py-3">
-              Reset Scores
+          <div className="flex gap-3 md:gap-4 w-full md:w-auto">
+            <button onClick={resetGame} className="btn-secondary text-xs md:text-sm px-4 md:px-6 py-3 flex-1 md:flex-none">
+              Reset
             </button>
-            <button onClick={clearAll} className="bg-red-50 text-red-600 border border-red-100 px-6 py-3 rounded-2xl text-sm font-black hover:bg-red-100 transition-all active:scale-95">
-              Clear Session
+            <button onClick={clearAll} className="bg-red-50 text-red-600 border border-red-100 px-4 md:px-6 py-3 rounded-2xl text-xs md:text-sm font-black hover:bg-red-100 transition-all active:scale-95 flex-1 md:flex-none">
+              Clear All
             </button>
           </div>
         </div>
 
         {/* Add Player Input */}
-        <div className="glass-card p-4 md:p-6! flex flex-col md:flex-row gap-4 shrink-0 bg-white/60 border-white/80">
+        <div className="glass-card p-4 md:p-6 flex flex-col md:flex-row gap-3 md:gap-4 shrink-0 bg-white/60 border-white/80">
           <input
             type="text"
             value={newPlayerName}
             onChange={(e) => setNewPlayerName(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addPlayer()}
             placeholder="Add player name..."
-            className="input-field flex-1"
+            className="input-field flex-1 py-3 md:py-4!"
           />
-          <button onClick={addPlayer} className="btn-primary py-4 px-10">
+          <button onClick={addPlayer} className="btn-primary py-3 md:py-4 px-6 md:px-10">
             Add to Game
           </button>
         </div>
@@ -152,9 +152,9 @@ const QuickPlayPage = () => {
         {/* Scoreboard / Leaderboard */}
         {players.length > 0 && (
           <div className="glass-card p-0 bg-white/60 border-white/80 animate-slide-up flex-1 flex flex-col min-h-0">
-            <div className="p-8 border-b border-white/50 flex justify-between items-center bg-white/20 shrink-0">
+            <div className="p-6 md:p-8 border-b border-white/50 flex justify-between items-center bg-white/20 shrink-0">
               <div>
-                <h2 className="text-3xl font-black text-slate-900 tracking-tight">Leaderboard</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Leaderboard</h2>
                 <div className="mt-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-3">
                   <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                   Live Scoring Enabled
@@ -165,7 +165,7 @@ const QuickPlayPage = () => {
                  <p className="text-2xl font-black text-slate-900">{players.length}</p>
               </div>
             </div>
-            <div className="divide-y divide-white/40 overflow-y-auto flex-1 pb-40 custom-scrollbar">
+            <div className="divide-y divide-white/40 overflow-y-auto flex-1 custom-scrollbar">
               {[...players]
                 .sort((a, b) => b.score - a.score)
                 .map((player, index) => {
@@ -251,20 +251,20 @@ const QuickPlayPage = () => {
 
       {/* Centralized Scoring Panel */}
       {selectedPlayer && (
-        <div className="fixed bottom-0 left-0 right-0 p-6 pb-10 md:pb-12 bg-white/80 backdrop-blur-3xl border-t border-white/50 shadow-[0_-20px_60px_rgba(0,0,0,0.08)] z-50 animate-slide-up">
+        <div className="fixed bottom-0 left-0 right-0 p-4 md:p-6 pb-8 md:pb-12 bg-white/80 backdrop-blur-3xl border-t border-white/50 shadow-[0_-20px_60px_rgba(0,0,0,0.08)] z-50 animate-slide-up">
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
-            <div className="flex-1 flex items-center gap-6">
-              <div className="w-16 h-16 bg-slate-900 rounded-3xl flex items-center justify-center text-white font-black text-2xl shadow-sm group relative overflow-hidden">
+            <div className="flex-1 flex items-center gap-4 md:gap-6">
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-slate-900 rounded-2xl md:rounded-3xl flex items-center justify-center text-white font-black text-xl md:text-2xl shadow-sm group relative overflow-hidden">
                 <div className="absolute inset-0 bg-primary-500/20 animate-pulse" />
                 <span className="relative z-10">{selectedPlayer.name[0].toUpperCase()}</span>
               </div>
               <div>
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Scoring for</p>
-                <h3 className="text-3xl font-black text-slate-900 tracking-tight">{selectedPlayer.name}</h3>
+                <p className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Scoring for</p>
+                <h3 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">{selectedPlayer.name}</h3>
               </div>
             </div>
 
-            <div className="w-full md:w-auto flex items-center gap-4">
+            <div className="w-full md:w-auto flex items-center gap-3">
               <input
                 type="number"
                 autoFocus
@@ -275,23 +275,23 @@ const QuickPlayPage = () => {
                   if (e.key === "Escape") setSelectedPlayerId(null);
                 }}
                 placeholder="0"
-                className="input-field text-center font-black text-4xl py-6! w-full md:w-40 shadow-2xl border-primary-500/20"
+                className="input-field text-center font-black text-3xl md:text-4xl py-3! md:py-5! w-24 sm:w-32 md:w-40 flex-1 sm:flex-none shadow-2xl border-primary-500/20 shrink"
               />
-              <div className="flex gap-3">
+              <div className="flex gap-2 shrink-0">
                 <button
                   onClick={() => applyScore(selectedPlayer.id, true)}
-                  className="btn-primary py-6! px-10! flex items-center justify-center gap-3 group"
+                  className="btn-primary py-3! md:py-5! px-5! md:px-8! flex items-center justify-center gap-2 group shrink-0"
                 >
-                  <svg className="w-8 h-8 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 md:w-8 md:h-8 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                   </svg>
                   <span className="hidden sm:inline">Add</span>
                 </button>
                 <button
                   onClick={() => applyScore(selectedPlayer.id, false)}
-                  className="btn-secondary py-6! px-10! flex items-center justify-center gap-3 border-white shadow-xl group"
+                  className="btn-secondary py-3! md:py-5! px-5! md:px-8! flex items-center justify-center gap-2 border-white shadow-xl group shrink-0"
                 >
-                  <svg className="w-8 h-8 group-hover:-scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 md:w-8 md:h-8 group-hover:-scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M20 12H4" />
                   </svg>
                   <span className="hidden sm:inline">Sub</span>
@@ -299,7 +299,7 @@ const QuickPlayPage = () => {
               </div>
               <button 
                 onClick={() => setSelectedPlayerId(null)}
-                className="p-4 text-slate-300 hover:text-slate-900 transition-all hover:scale-110 active:scale-90"
+                className="p-3 text-slate-300 hover:text-slate-900 transition-all hover:scale-110 active:scale-90 shrink-0"
               >
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />

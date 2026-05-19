@@ -57,16 +57,16 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   return (
     <>
       <aside
-        className={`fixed lg:sticky top-0 left-0 z-50 w-80 bg-white/80 backdrop-blur-3xl border-r border-slate-100 flex flex-col h-screen transition-transform duration-500 var(--ease-out-expo) ${
+        className={`fixed lg:sticky top-0 left-0 z-50 w-72 sm:w-80 bg-white/80 backdrop-blur-3xl border-r border-slate-100 flex flex-col h-screen transition-transform duration-500 var(--ease-out-expo) ${
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
         {/* Brand */}
-        <div className="p-10 pb-12 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-4 group cursor-pointer" onClick={() => navigate("/")}>
-            <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
+        <div className="p-6 sm:p-8 lg:p-10 pb-8 sm:pb-10 lg:pb-12 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-3 sm:gap-4 group cursor-pointer" onClick={() => navigate("/")}>
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-900 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
               <svg
-                className="w-6 h-6 text-white"
+                className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -79,7 +79,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 />
               </svg>
             </div>
-            <span className="text-2xl font-black text-slate-900 tracking-tighter">
+            <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter">
               Point<span className="gradient-text">Calc</span>
             </span>
           </div>
@@ -87,10 +87,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           {/* Mobile Close Button */}
           <button
             onClick={onClose}
-            className="lg:hidden p-3 text-slate-400 hover:bg-slate-50 rounded-xl transition-all active:scale-90"
+            className="lg:hidden p-2 sm:p-3 text-slate-400 hover:bg-slate-50 rounded-lg sm:rounded-xl transition-all active:scale-90"
           >
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5 sm:w-6 sm:h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -106,13 +106,13 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-6 space-y-2 overflow-y-auto custom-scrollbar">
+        <nav className="flex-1 px-4 sm:px-6 space-y-2 overflow-y-auto custom-scrollbar">
           {gameStarted && (
             <NavLink
               to="/app/game"
               onClick={onClose}
               className={({ isActive }) =>
-                `flex items-center gap-4 px-6 py-5 rounded-2xl font-black transition-all relative group overflow-hidden ${
+                `flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black transition-all relative group overflow-hidden text-sm sm:text-base ${
                   isActive
                     ? "bg-slate-900 text-white"
                     : "text-green-600 hover:bg-green-50/50 border border-green-100"
@@ -120,18 +120,18 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               }
             >
               <div className="absolute inset-0 bg-green-500/5 group-hover:bg-green-500/10 transition-colors pointer-events-none" />
-              <div className="relative z-10 flex items-center gap-4 w-full">
-                <span className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+              <div className="relative z-10 flex items-center gap-3 sm:gap-4 w-full">
+                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-lg sm:text-xl group-hover:scale-110 transition-transform">
                   🎮
                 </span>
                 <span className="flex-1">Live Game</span>
-                <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
               </div>
             </NavLink>
           )}
 
-          <div className="pt-6 pb-2">
-            <p className="px-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6">
+          <div className="pt-4 sm:pt-6 pb-2">
+            <p className="px-4 sm:px-6 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4 sm:mb-6">
               Main Menu
             </p>
             <div className="space-y-2">
@@ -142,7 +142,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                   end={item.to === "/app"}
                   onClick={onClose}
                   className={({ isActive }) =>
-                    `flex items-center gap-4 px-6 py-4 rounded-2xl font-black transition-all duration-500 group ${
+                    `flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black transition-all duration-500 group text-sm sm:text-base ${
                       isActive
                         ? "bg-linear-to-r from-primary-500 to-orange-600 text-white"
                         : "text-slate-400 hover:text-slate-900 hover:bg-white border border-transparent hover:border-slate-100"
@@ -152,7 +152,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                   <div className={`transition-transform duration-500 group-hover:scale-110`}>
                     {item.icon}
                   </div>
-                  <span className="text-sm tracking-tight">{item.label}</span>
+                  <span className="text-xs sm:text-sm tracking-tight">{item.label}</span>
                 </NavLink>
               ))}
             </div>
@@ -160,10 +160,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </nav>
 
         {/* User Info & Footer */}
-        <div className="p-6 pb-10 shrink-0">
-          <div className="glass-card p-4 bg-white/60 border-white/80 flex items-center gap-4 mb-6 hover:bg-white transition-all duration-500 cursor-pointer" onClick={() => navigate("/app/profile")}>
+        <div className="p-4 sm:p-6 pb-6 sm:pb-10 shrink-0">
+          <div className="glass-card p-3 sm:p-4 bg-white/60 border-white/80 flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 hover:bg-white transition-all duration-500 cursor-pointer" onClick={() => navigate("/app/profile")}>
             <div
-              className={`w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white font-black text-sm group overflow-hidden relative`}
+              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-900 flex items-center justify-center text-white font-black text-xs sm:text-sm group overflow-hidden relative`}
             >
               <div className="absolute inset-0 bg-primary-500/20 animate-pulse-slow" />
               <span className="relative z-10">
@@ -172,10 +172,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-black text-slate-900 truncate tracking-tight">
+              <p className="text-xs sm:text-sm font-black text-slate-900 truncate tracking-tight">
                 {user?.username || user?.email?.split('@')[0]}
               </p>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">
+              <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">
                 Pro Account
               </p>
             </div>
@@ -186,10 +186,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               handleLogout();
               onClose();
             }}
-            className="w-full flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-2xl font-black transition-all group"
+            className="w-full flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl sm:rounded-2xl font-black transition-all group text-sm sm:text-base"
           >
             <svg
-              className="w-5 h-5 group-hover:-translate-x-1 transition-transform"
+              className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-x-1 transition-transform"
               fill="none"
               stroke="currentColor"
               strokeWidth="2.5"
@@ -201,14 +201,14 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               <polyline points="16 17 21 12 16 7" />
               <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
-            <span className="text-sm">Sign Out</span>
+            <span className="text-xs sm:text-sm">Sign Out</span>
           </button>
           
-          <div className="mt-8 px-6 flex items-center justify-between opacity-40 hover:opacity-100 transition-opacity">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+          <div className="mt-6 sm:mt-8 px-4 sm:px-6 flex items-center justify-between opacity-40 hover:opacity-100 transition-opacity">
+            <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">
               v2.0.4
             </p>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+            <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">
               By KP
             </p>
           </div>

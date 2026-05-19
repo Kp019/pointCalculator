@@ -72,20 +72,20 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
 
   return (
     <div className="w-full animate-scale-in max-w-6xl">
-      <div className="card w-full flex flex-col md:flex-row md:gap-8 gap-5">
+      <div className="card w-full flex flex-col md:flex-row md:gap-6 lg:gap-8 gap-4 sm:gap-5">
         {/* Left Side: Player Setup */}
-        <div className="flex-1 md:space-y-6 space-y-4">
-          <h2 className="text-3xl font-bold gradient-text">New Game</h2>
+        <div className="flex-1 space-y-4 sm:space-y-5 md:space-y-6">
+          <h2 className="text-2xl sm:text-3xl font-bold gradient-text">New Game</h2>
 
-          <div className="md:space-y-4 space-y-2 max-h-[50vh] overflow-y-auto md:pr-2 scrollbar-hide">
+          <div className="space-y-2 sm:space-y-3 md:space-y-4 max-h-[50vh] overflow-y-auto pr-1 md:pr-2 scrollbar-hide">
             {playerNames.map((name, index) => (
               <div
                 key={index}
-                className="flex gap-3 items-center"
+                className="flex gap-2 sm:gap-3 items-center"
               >
                 <div className="flex-1 relative">
-                  <div className="absolute inset-y-0 left-0 md:pl-4 pl-2 flex items-center pointer-events-none">
-                    <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-sm font-bold text-primary-600">
+                  <div className="absolute inset-y-0 left-0 pl-3 sm:pl-4 flex items-center pointer-events-none">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary-100 flex items-center justify-center text-xs sm:text-sm font-bold text-primary-600">
                       {index + 1}
                     </div>
                   </div>
@@ -94,17 +94,17 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
                     value={name}
                     onChange={(e) => updatePlayerName(index, e.target.value)}
                     placeholder={`Player ${index + 1} Name`}
-                    className="w-full pl-16 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 font-bold"
+                    className="w-full pl-12 sm:pl-14 md:pl-16 pr-3 sm:pr-4 py-3 sm:py-3.5 md:py-4 bg-slate-50 border border-slate-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 font-bold text-sm sm:text-base"
                     maxLength={20}
                   />
                 </div>
                 {playerNames.length > 2 && (
                   <button
                     onClick={() => removePlayer(index)}
-                    className="px-4 py-4 bg-red-50 hover:bg-red-100 text-red-500 rounded-xl transition-colors"
+                    className="p-3 sm:p-3.5 md:p-4 bg-red-50 hover:bg-red-100 text-red-500 rounded-lg sm:rounded-xl transition-colors shrink-0"
                   >
                     <svg
-                      className="w-5 h-5"
+                      className="w-4 h-4 sm:w-5 sm:h-5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -125,7 +125,7 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
           <button onClick={addPlayer} className="btn-secondary w-full group">
             <span className="flex items-center justify-center gap-2">
               <svg
-                className="w-5 h-5 text-primary-500"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-primary-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -143,18 +143,18 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
         </div>
 
         {/* Right Side: Rule Selection */}
-        <div className="flex-1 md:p-6 md:bg-slate-50 rounded-2xl md:border md:border-slate-100 flex flex-col">
-          <h2 className="text-3xl font-bold text-slate-900 mb-6">Game Rules</h2>
+        <div className="flex-1 p-4 sm:p-5 md:p-6 bg-slate-50 rounded-xl sm:rounded-2xl border border-slate-100 flex flex-col">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 sm:mb-5 md:mb-6">Game Rules</h2>
 
-          <div className="flex-1 space-y-6">
+          <div className="flex-1 space-y-4 sm:space-y-5 md:space-y-6">
             <div className="space-y-2">
-              <label className="block text-sm font-bold text-slate-700">
+              <label className="block text-xs sm:text-sm font-bold text-slate-700">
                 Select Rule Preset
               </label>
               <select
                 value={selectedRuleId}
                 onChange={(e) => setSelectedRuleId(e.target.value)}
-                className="w-full p-4 bg-white border border-slate-300 rounded-xl text-slate-900 font-medium focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full p-3 sm:p-3.5 md:p-4 bg-white border border-slate-300 rounded-lg sm:rounded-xl text-slate-900 font-medium focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base"
               >
                 <option value="">-- Select a Rule --</option>
                 {savedRules.map((rule) => (
@@ -165,9 +165,9 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
               </select>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <span className="h-px bg-slate-300 flex-1"></span>
-              <span className="text-slate-400 text-sm font-bold uppercase">
+              <span className="text-slate-400 text-xs sm:text-sm font-bold uppercase">
                 OR
               </span>
               <span className="h-px bg-slate-300 flex-1"></span>
@@ -175,10 +175,10 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="w-full py-4 border-2 border-dashed border-primary-300 bg-primary-50 text-primary-600 rounded-xl font-bold hover:bg-primary-100 hover:border-primary-400 transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 sm:py-3.5 md:py-4 border-2 border-dashed border-primary-300 bg-primary-50 text-primary-600 rounded-lg sm:rounded-xl font-bold hover:bg-primary-100 hover:border-primary-400 transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
             >
               <svg
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -194,8 +194,8 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
             </button>
 
             {selectedRuleId && (
-              <div className="p-4 bg-white border border-slate-200 rounded-xl">
-                <h3 className="font-bold text-slate-900 mb-2">
+              <div className="p-3 sm:p-4 bg-white border border-slate-200 rounded-lg sm:rounded-xl">
+                <h3 className="font-bold text-slate-900 mb-2 text-sm sm:text-base">
                   Selected Configuration
                 </h3>
                 {(() => {
@@ -204,7 +204,7 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
                   );
                   if (!r) return null;
                   return (
-                    <ul className="text-sm text-slate-600 space-y-1">
+                    <ul className="text-xs sm:text-sm text-slate-600 space-y-1">
                       <li className="flex justify-between">
                         <span>Win Metric:</span>{" "}
                         <span className="font-bold capitalize">
@@ -241,9 +241,9 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
           </div>
 
           {error && (
-            <div className="mt-4 p-3 bg-red-50 text-red-600 text-sm font-bold rounded-xl flex items-center gap-2">
+            <div className="mt-3 sm:mt-4 p-2.5 sm:p-3 bg-red-50 text-red-600 text-xs sm:text-sm font-bold rounded-lg sm:rounded-xl flex items-center gap-2">
               <svg
-                className="w-5 h-5 shrink-0"
+                className="w-4 h-4 sm:w-5 sm:h-5 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -262,12 +262,12 @@ const GameSetup = ({ onStartGame }: GameSetupProps) => {
           <button
             onClick={handleStartGame}
             disabled={!selectedRuleId}
-            className="mt-6 btn-primary w-full group disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-4 sm:mt-5 md:mt-6 btn-primary w-full group disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span className="flex items-center justify-center gap-2 text-white text-lg">
+            <span className="flex items-center justify-center gap-2 text-white text-base sm:text-lg">
               Start Game
               <svg
-                className="w-6 h-6 group-hover:translate-x-1 transition-transform"
+                className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

@@ -29,4 +29,15 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules/framer-motion")) {
+            return "vendor-framer-motion";
+          }
+        },
+      },
+    },
+  },
 });

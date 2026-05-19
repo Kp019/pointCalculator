@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://point-calculator.dev-kp.in/sitemap.xml

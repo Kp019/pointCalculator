@@ -39,23 +39,23 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden">
       {/* Dynamic Background Glows */}
       <div className="fixed inset-0 pointer-events-none -z-10">
-        <div 
-          className="absolute top-0 left-0 w-[600px] h-[600px] bg-primary-200/20 rounded-full blur-[140px] animate-pulse-slow"
+        <div
+          className="absolute top-0 left-0 w-[400px] sm:w-[500px] md:w-[600px] h-[400px] sm:h-[500px] md:h-[600px] bg-primary-200/20 rounded-full blur-[100px] sm:blur-[120px] md:blur-[140px] animate-pulse-slow"
         />
-        <div 
-          className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-accent-200/20 rounded-full blur-[140px] animate-pulse-slow"
+        <div
+          className="absolute bottom-0 right-0 w-[400px] sm:w-[500px] md:w-[600px] h-[400px] sm:h-[500px] md:h-[600px] bg-accent-200/20 rounded-full blur-[100px] sm:blur-[120px] md:blur-[140px] animate-pulse-slow"
           style={{ animationDelay: '-2s' }}
         />
       </div>
 
       <div className="w-full max-w-md relative z-10">
-        <div className="text-center mb-12 animate-slide-down">
-          <Link to="/" className="w-24 h-24 bg-slate-900 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-md hover:rotate-12 transition-transform duration-500 group">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 animate-slide-down">
+          <Link to="/" className="w-20 h-20 sm:w-24 sm:h-24 bg-slate-900 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-md hover:rotate-12 transition-transform duration-500 group">
             <svg
-              className="w-12 h-12 text-white group-hover:scale-110 transition-transform"
+              className="w-10 h-10 sm:w-12 sm:h-12 text-white group-hover:scale-110 transition-transform"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -68,24 +68,24 @@ const LoginPage = () => {
               />
             </svg>
           </Link>
-          <h1 className="text-5xl font-black text-slate-900 tracking-tighter">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tighter">
             Point<span className="gradient-text">Calculator</span>
           </h1>
-          <p className="text-slate-400 font-bold uppercase text-[10px] tracking-[0.3em] mt-4">
+          <p className="text-slate-400 font-bold uppercase text-[9px] sm:text-[10px] tracking-[0.3em] mt-3 sm:mt-4">
             Professional scoring engine
           </p>
         </div>
 
-        <div className="glass-card p-10 bg-white/60 border-white/80 animate-scale-in shadow-sm">
-          <form onSubmit={handleLogin} className="space-y-8">
+        <div className="glass-card p-6 sm:p-8 md:p-10 bg-white/60 border-white/80 animate-scale-in shadow-sm">
+          <form onSubmit={handleLogin} className="space-y-6 sm:space-y-8">
             {error && (
-              <div className="p-5 bg-red-50 text-red-600 rounded-2xl text-sm font-bold text-center border border-red-100 animate-shake break-words">
+              <div className="p-4 sm:p-5 bg-red-50 text-red-600 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold text-center border border-red-100 animate-shake break-words">
                 {getFriendlyError(error)}
               </div>
             )}
 
-            <div className="space-y-3">
-              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
+            <div className="space-y-2 sm:space-y-3">
+              <label className="block text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
                 Email Address
               </label>
               <input
@@ -99,8 +99,8 @@ const LoginPage = () => {
               />
             </div>
 
-            <div className="space-y-3">
-              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
+            <div className="space-y-2 sm:space-y-3">
+              <label className="block text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
                 Password
               </label>
               <input
@@ -116,15 +116,15 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="btn-primary w-full py-5 text-xl shadow-sm flex items-center justify-center gap-4 group disabled:opacity-70 disabled:cursor-not-allowed"
+              className="btn-primary w-full py-4 sm:py-5 text-lg sm:text-xl shadow-sm flex items-center justify-center gap-3 sm:gap-4 group disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-5 h-5 sm:w-6 sm:h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
                   Sign In
                   <svg
-                    className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-500"
+                    className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform duration-500"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -141,12 +141,12 @@ const LoginPage = () => {
             </button>
           </form>
 
-          <div className="relative my-10">
+          <div className="relative my-8 sm:my-10">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-100"></div>
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="px-6 bg-transparent text-slate-300 font-black uppercase tracking-[0.2em]">
+              <span className="px-4 sm:px-6 bg-transparent text-slate-300 font-black uppercase tracking-[0.2em]">
                 Or
               </span>
             </div>
@@ -154,11 +154,11 @@ const LoginPage = () => {
 
           <button
             onClick={() => navigate("/quick-play")}
-            className="btn-secondary w-full py-4 flex items-center justify-center gap-4 group"
+            className="btn-secondary w-full flex items-center justify-center gap-3 sm:gap-4 group"
           >
-            <div className="w-8 h-8 bg-primary-50 rounded-lg flex items-center justify-center group-hover:bg-primary-100 transition-colors">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary-50 rounded-lg flex items-center justify-center group-hover:bg-primary-100 transition-colors">
               <svg
-                className="w-5 h-5 text-primary-500"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-primary-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -174,8 +174,8 @@ const LoginPage = () => {
             Quick Play
           </button>
           
-          <div className="mt-12 text-center">
-            <p className="text-slate-500 font-medium">
+          <div className="mt-8 sm:mt-10 md:mt-12 text-center">
+            <p className="text-slate-500 font-medium text-sm sm:text-base">
               New here?{" "}
               <Link
                 to="/signup"
