@@ -43,7 +43,8 @@ function App() {
             }
           >
             <Routes>
-              <Route path="/" element={<RootRoute />} />
+              <Route path="/" element={<Navigate to="/ScoreCounterOnline" replace />} />
+              <Route path="/ScoreCounterOnline" element={<RootRoute />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/quick-play" element={<QuickPlayPage />} />
