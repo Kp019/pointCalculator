@@ -482,6 +482,114 @@ const Step2Preview = ({ isMobile = false }: { isMobile?: boolean }) => (
   </div>
 );
 
+const FAQItem = ({ question, answer }: { question: string; answer: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border-b border-primary-100/50 py-6 last:border-none">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex justify-between items-center text-left py-2 font-black text-lg md:text-xl text-slate-900 hover:text-primary-600 transition-colors group cursor-pointer"
+      >
+        <span className="pr-4">{question}</span>
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-primary-100/50 text-slate-500 group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors flex-shrink-0"
+        >
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.5}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0, marginTop: 0 }}
+            animate={{ height: "auto", opacity: 1, marginTop: 12 }}
+            exit={{ height: 0, opacity: 0, marginTop: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            <p className="text-slate-600 md:text-lg font-medium leading-relaxed max-w-3xl pr-4">
+              {answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const FAQSection = () => {
+  const faqs = [
+    {
+      question: "How does the online game points calculator work?",
+      answer: "PointCalc allows you to track scores for any board game, card game, or sport. You initialize players, set custom winning rules (like target score, high/low win condition), and add or subtract points in real-time. The board updates instantly and syncs across all devices.",
+    },
+    {
+      question: "Can I calculate points for card games like Rummy or Uno?",
+      answer: "Yes, PointCalc is fully customizable. You can configure it for card games where a low score wins (like Rummy or Hearts) or high score wins (like Uno, Scrabble, or Bridge). You can easily set positive or negative point increments.",
+    },
+    {
+      question: "Does the point calculator save game history?",
+      answer: "Yes, when you sign up for a free account, all your game history is saved automatically in the cloud. You can resume interrupted games on any device, track player stats over time, and view complete round-by-round score logs.",
+    },
+    {
+      question: "Can multiple players sync scores on their phones?",
+      answer: "Yes, PointCalc features real-time cloud sync. When a host updates the score on one screen, the scoreboard updates instantly for all players on their respective devices.",
+    },
+    {
+      question: "Is PointCalc free to use?",
+      answer: "PointCalc is 100% free online score calculator. You can use it as a guest for a quick game without registration, or create a free account to unlock unlimited games, history, and custom rule presets.",
+    },
+  ];
+
+  return (
+    <section id="faq" className="py-24 md:py-48 px-6 bg-slate-50/30 border-t border-primary-100/50">
+      <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="mb-16 text-center"
+        >
+          <motion.p variants={fadeInUp} className="text-primary-600 font-black uppercase text-xs tracking-[0.4em] mb-4">
+            Answers & Help
+          </motion.p>
+          <TextReveal
+            as="h2"
+            text="Frequently Asked Questions"
+            className="text-4xl md:text-6xl font-black tracking-tighter justify-center text-slate-900"
+          />
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+          className="glass-card p-6 md:p-12 bg-white/40 border-white/50 shadow-2xl rounded-3xl"
+        >
+          {faqs.map((faq, index) => (
+            <FAQItem key={index} question={faq.question} answer={faq.answer} />
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 const LandingPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -1072,6 +1180,9 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
+
+      {/* Frequently Asked Questions */}
+      <FAQSection />
 
       {/* Minimalist Light Footer & CTA */}
       <footer className="bg-white border-t border-primary-100/50 pt-32 md:pt-64 px-6 overflow-hidden relative">
