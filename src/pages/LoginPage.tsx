@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store";
 import { loginUser, clearError } from "../store/slices/authSlice";
+import PointraLogo from "../components/Brand/PointraLogo";
 
 const getFriendlyError = (err: string | null) => {
   if (!err) return null;
@@ -53,23 +54,13 @@ const LoginPage = () => {
 
       <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-8 sm:mb-10 md:mb-12 animate-slide-down">
-          <Link to="/" className="w-20 h-20 sm:w-24 sm:h-24 bg-slate-900 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-md hover:rotate-12 transition-transform duration-500 group">
-            <svg
-              className="w-10 h-10 sm:w-12 sm:h-12 text-white group-hover:scale-110 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
-            </svg>
+          <Link to="/" className="flex justify-center mb-6 sm:mb-8 group">
+            <div className="group-hover:scale-110 transition-transform duration-500 group-hover:drop-shadow-lg">
+              <PointraLogo size={80} />
+            </div>
           </Link>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tighter">
-            Point<span className="gradient-text">Calculator</span>
+            <span className="gradient-text">Pointra</span>
           </h1>
           <p className="text-slate-400 font-bold uppercase text-[9px] sm:text-[10px] tracking-[0.3em] mt-3 sm:mt-4">
             Professional scoring engine

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
+import PointraLogo from "../components/Brand/PointraLogo";
 
 // --- Animation Variants ---
 
@@ -535,11 +536,11 @@ const FAQSection = () => {
   const faqs = [
     {
       question: "How does the online game points calculator work?",
-      answer: "PointCalc allows you to track scores for any board game, card game, or sport. You initialize players, set custom winning rules (like target score, high/low win condition), and add or subtract points in real-time. The board updates instantly and syncs across all devices.",
+      answer: "Pointra allows you to track scores for any board game, card game, or sport. You initialize players, set custom winning rules (like target score, high/low win condition), and add or subtract points in real-time. The board updates instantly and syncs across all devices.",
     },
     {
       question: "Can I calculate points for card games like Rummy or Uno?",
-      answer: "Yes, PointCalc is fully customizable. You can configure it for card games where a low score wins (like Rummy or Hearts) or high score wins (like Uno, Scrabble, or Bridge). You can easily set positive or negative point increments.",
+      answer: "Yes, Pointra is fully customizable. You can configure it for card games where a low score wins (like Rummy or Hearts) or high score wins (like Uno, Scrabble, or Bridge). You can easily set positive or negative point increments.",
     },
     {
       question: "Does the point calculator save game history?",
@@ -547,11 +548,11 @@ const FAQSection = () => {
     },
     {
       question: "Can multiple players sync scores on their phones?",
-      answer: "Yes, PointCalc features real-time cloud sync. When a host updates the score on one screen, the scoreboard updates instantly for all players on their respective devices.",
+      answer: "Yes, Pointra features real-time cloud sync. When a host updates the score on one screen, the scoreboard updates instantly for all players on their respective devices.",
     },
     {
-      question: "Is PointCalc free to use?",
-      answer: "PointCalc is 100% free online score calculator. You can use it as a guest for a quick game without registration, or create a free account to unlock unlimited games, history, and custom rule presets.",
+      question: "Is Pointra free to use?",
+      answer: "Pointra is 100% free online score calculator. You can use it as a guest for a quick game without registration, or create a free account to unlock unlimited games, history, and custom rule presets.",
     },
   ];
 
@@ -676,23 +677,11 @@ const LandingPage = () => {
               setIsMobileMenuOpen(false);
             }}
           >
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-slate-900 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg transition-transform duration-500 group-hover:rotate-12">
-              <svg
-                className="w-5 h-5 md:w-6 md:h-6 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                />
-              </svg>
+            <div className="transition-transform duration-500 group-hover:scale-110">
+              <PointraLogo size={36} />
             </div>
             <span className="text-xl md:text-2xl font-black tracking-tighter">
-              PointCalc
+              <span className="gradient-text">Pointra</span>
             </span>
           </div>
 
@@ -1261,23 +1250,11 @@ const LandingPage = () => {
               className="flex flex-col items-center gap-14 opacity-60"
             >
               <div className="flex items-center gap-6 group cursor-pointer">
-                <div className="w-14 h-14 bg-slate-900 rounded-[1.5rem] flex items-center justify-center shadow-2xl transition-transform duration-500 group-hover:rotate-12">
-                  <svg
-                    className="w-8 h-8 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M13 10V3L4 14h7v7l9-11h-7z"
-                    />
-                  </svg>
+                <div className="transition-transform duration-500 group-hover:scale-110">
+                  <PointraLogo size={56} />
                 </div>
                 <span className="text-3xl font-black tracking-tighter text-slate-900">
-                  PointCalculator
+                  Pointra
                 </span>
               </div>
 
@@ -1287,7 +1264,7 @@ const LandingPage = () => {
                   Designed for Elite Performance
                 </p>
                 <p className="text-xs font-bold text-slate-300">
-                  © 2024 PointCalculator. All rights reserved.
+                  © 2026 Pointra. All rights reserved.
                 </p>
               </div>
             </motion.div>

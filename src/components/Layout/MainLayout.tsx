@@ -1,8 +1,8 @@
 import { Outlet, Navigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useAppSelector } from "../../store";
-
 import { useSidebar } from "../../hooks/useSidebar";
+import PointraLogo from "../Brand/PointraLogo";
 
 const MainLayout = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -26,23 +26,11 @@ const MainLayout = () => {
         {/* Mobile Header */}
         <header className="lg:hidden bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 py-3 sm:p-4 sticky top-0 z-30 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-900 rounded-lg sm:rounded-xl flex items-center justify-center group">
-              <svg
-                className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:scale-110 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                />
-              </svg>
+            <div className="group-hover:scale-110 transition-transform duration-500">
+              <PointraLogo size={36} />
             </div>
             <span className="font-black text-slate-900 tracking-tighter text-lg sm:text-xl">
-              Point<span className="gradient-text">Calc</span>
+              <span className="gradient-text">Pointra</span>
             </span>
           </div>
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store";
 import { signupUser, clearError } from "../store/slices/authSlice";
+import PointraLogo from "../components/Brand/PointraLogo";
 
 const getFriendlyError = (err: string | null) => {
   if (!err) return null;
@@ -70,20 +71,10 @@ const SignupPage = () => {
 
       <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-10 animate-slide-down">
-          <Link to="/" className="w-20 h-20 bg-slate-900 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-md hover:rotate-12 transition-transform duration-500 group">
-            <svg
-              className="w-10 h-10 text-white group-hover:scale-110 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
-            </svg>
+          <Link to="/" className="flex justify-center mb-6 group">
+            <div className="group-hover:scale-110 transition-transform duration-500 group-hover:drop-shadow-lg">
+              <PointraLogo size={80} />
+            </div>
           </Link>
           <h1 className="text-4xl font-black text-slate-900 tracking-tighter">
             Join the <span className="gradient-text">Elite.</span>

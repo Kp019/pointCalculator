@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store";
 import { showModal } from "../../store/slices/uiSlice";
+import PointraLogo from "../Brand/PointraLogo";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -64,23 +65,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         {/* Brand */}
         <div className="p-6 sm:p-8 lg:p-10 pb-8 sm:pb-10 lg:pb-12 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3 sm:gap-4 group cursor-pointer" onClick={() => navigate("/")}>
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-900 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
-              <svg
-                className="w-5 h-5 sm:w-6 sm:h-6 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={3}
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                />
-              </svg>
+            <div className="group-hover:scale-110 transition-transform duration-500">
+              <PointraLogo size={40} />
             </div>
             <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter">
-              Point<span className="gradient-text">Calc</span>
+              <span className="gradient-text">Pointra</span>
             </span>
           </div>
 
