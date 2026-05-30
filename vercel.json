@@ -8,7 +8,7 @@
           "value": "point-calculator-flame.vercel.app"
         }
       ],
-      "destination": "https://point-calculator.dev-kp.in/$1",
+      "destination": "https://pointra.dev-kp.in/$1",
       "permanent": true
     }
   ],

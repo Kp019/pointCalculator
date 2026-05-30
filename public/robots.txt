@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://point-calculator.dev-kp.in/sitemap.xml
+Sitemap: https://pointra.dev-kp.in/sitemap.xml
